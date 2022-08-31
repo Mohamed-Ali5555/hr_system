@@ -46,7 +46,7 @@ class Add_employer extends Notification
             //  'data' => $this->details['body']
  
             'id'=> $this->employer_id->id,
-            'title'=>'تم اضافة فاتورة جديد بواسطة :',
+            'title'=>'تم اضافة موظف جديد بواسطة :',
             'user'=> Auth::user()->name,
          ];
     }

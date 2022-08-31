@@ -12,7 +12,7 @@ class Employeer extends Model
 {
     use HasFactory;
 
-    protected $guarded =[]; 
+    protected $fillable=['first_name','slug','address','email','phone','date','type','start_time','date_of_contact','start_time','end_time','salary','photo','national_id','nationality','note','section_id','status'];
 
     public function section(){
         return $this->belongsTo(section::Class);

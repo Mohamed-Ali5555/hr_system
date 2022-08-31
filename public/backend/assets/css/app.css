@@ -53756,3 +53756,17 @@ margin-top:20px
 {
   padding: 0px 50px;
 }
+
+
+.modal-backdrop.show {
+    opacity: 0;
+}
+.modal-backdrop {
+    position: revert;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000000;
+}

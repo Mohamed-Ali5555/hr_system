@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\section;
 use App\Models\AdditionAndDiscount;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session ;
 
 use App\Models\Salary_report;
 use App\Models\Employeer;
-
 class AdditionAndDiscountController extends Controller
 {
     /**
@@ -137,6 +137,7 @@ $new = AdditionAndDiscount::create([
     // 'section_id' => $request->section_id,
 
     'week_holiday' => implode(',', (array) $data['week_holiday']),
+    // 'week_holiday'=>json_encode($request->week_holiday),
 ]);
 
 
@@ -157,6 +158,30 @@ $new = AdditionAndDiscount::create([
   
 
 // ]);
+// $customer = DB::table('empoyees')
+// ->join('shops', 'customers.shop_id', '=', 'shops.shop_id')
+// ->where('customer_contact', $contact_no)
+// ->get();
+
+
+$salary =  \App\Models\Employeer::where('id', $request->employer_id)->value('salary');
+
+
+
+$salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
+->whereBetween('today', ["2022-08-01", "2022-08-31"])
+->where('status' , '=' , 'attendance')
+->groupBy('employer_id')->where('employer_id',$request->employer_id)
+->first();
+
+
+$salary_reports43 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as upsent')
+->whereBetween('today', ["2022-08-01", "2022-08-31"])
+->where('status' , '=' , 'upsent')
+->groupBy('employer_id')->where('employer_id',$request->employer_id)
+->first();
+
+
 $employer_salary=Salary_report::where('employer_id',$request->employer_id)
 ->update([
     'addition_id'=>$new->id,
@@ -165,7 +190,17 @@ $employer_salary=Salary_report::where('employer_id',$request->employer_id)
     'discount' => $request->discount,
     'addition' => $request->addition,
     'total' => $request->total,
+    // 'salary' => $request->Salary_report->salary,
+
     'week_holiday' => implode(',', (array) $data['week_holiday']),
+        // 'week_holiday'=>json_encode($request->week_holiday),
+
+
+    
+
+    
+    'all_total' => $request->all_total= $salary+$request['total']-($salary_reports43->upsent*$request['hour_price']),
+
 ]);
 
 
@@ -199,7 +234,17 @@ return redirect()->route('addition_and_discount.index')->with('success','Success
      */
     public function edit($id)
     {
-        //
+
+        $sections  = section ::all();
+        $employers   = Employeer ::all();
+        $addition_and_discounts = AdditionAndDiscount::find($id);
+
+        // $addition_and_discounts = AdditionAndDiscount::where('id',$id)->get();
+        if($addition_and_discounts){
+            return view('backend.addition_and_discount.edit',compact('addition_and_discounts','sections','employers'));
+        }else{
+            return back()->with('error','Data not found !');
+        }    
     }
 
     /**
@@ -211,7 +256,52 @@ return redirect()->route('addition_and_discount.index')->with('success','Success
      */
     public function update(Request $request, $id)
     {
-        
+        // return $request->all();
+        $addition_and_discount = AdditionAndDiscount::find($id);
+        if($addition_and_discount){
+
+
+        //    $this->validate($request, [
+
+        //        'first_name' => 'string|required',
+        //                // 'slug' =>'string|required|exists:sections,slug',
+   
+        //        'address' => 'string|required',
+        //        'email' => 'email|required',
+        //        'phone' => 'required|max:30|min:11',
+        //        'date' => 'date|required',
+        //        'type' => 'required|in:mail,femail',
+        //        'date_of_contact' => 'date|required',
+        //        // 'start_time' => 'required|after:' . Carbon::now()->format('H:i:s'),
+        //        // 'end_time' => 'required|after:start_time',
+        //        'national_id'=>'required|numeric',
+        //        'nationality'=>'string|required',
+        //        'photo'=>'required',
+        //        'salary'=>'required|numeric',
+        //        'note'=>'string|nullable',
+        //        'section_id'=>'required|exists:sections,id',
+        //        'status' => 'nullable|in:pending,accept',
+               
+   
+        //    ],[
+        //        'phone.required'    => 'من فضلك ادخل رقم تليفون صحيح ',
+    
+        //     ]);
+            $data = $request->all();
+            $new = $addition_and_discount->fill($data)->save();
+            if($new){
+                return redirect()->route('addition_and_discount.index')->with('success','Successfuly updated addition_and_discount');
+                //redirect()->route('backend.addition_and_discount.index')->with('success','successfully updated addition_and_discount');
+
+            }else{
+                return back()->with('error','something went wrong!');
+            }
+
+
+
+            }else{
+                return back()->with('error','Data not found !');
+            }
     }
 
     /**
@@ -222,6 +312,17 @@ return redirect()->route('addition_and_discount.index')->with('success','Success
      */
     public function destroy($id)
     {
-        //
+        $addition_and_discount = AdditionAndDiscount::find($id);
+        if($addition_and_discount){
+                  $status = $addition_and_discount->delete();
+                  if($status){
+                   
+                    return redirect()->route('addition_and_discount.index')->with('success','Successfuly deleted addition_and_discount');
+                }else{
+                      return back()->with('error','something went wrong');
+                  }
+        }else{
+            return back()->with('error','Data not found !');
+        }
     }
 }

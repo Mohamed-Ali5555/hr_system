@@ -74,12 +74,12 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
+        // $role = Role::find($id);
+        // $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+        //     ->where("role_has_permissions.role_id",$id)
+        //     ->get();
     
-        return view('backend.roles.show',compact('role','rolePermissions'));
+        // return view('backend.roles.show',compact('role','rolePermissions'));
     }
     
     /**
@@ -90,6 +90,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        // return $id;
         $role = Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
@@ -119,7 +120,7 @@ class RoleController extends Controller
     
         $role->syncPermissions($request->input('permission'));
     
-        return redirect()->route('backend.roles.index')
+        return redirect()->route('roles.index')
                         ->with('success','Role updated successfully');
     }
     /**

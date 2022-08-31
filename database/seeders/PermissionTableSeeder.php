@@ -17,12 +17,15 @@ class PermissionTableSeeder extends Seeder
         $permissions = [
            'sections',
            'employers',
-           'role-edit',
-           'role-delete',
-           'product-list',
-           'product-create',
-           'product-edit',
-           'product-delete'
+           'general_setting',
+           'addition_and_discount',
+           'attendance',
+           'salary_report',
+           'archeve',
+           'roles',
+           'official_holidays',
+           'Dashboard',
+           'users'
         ];
      
         foreach ($permissions as $permission) {

@@ -140,6 +140,8 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('select[id="section_id"]').on('change', function() {

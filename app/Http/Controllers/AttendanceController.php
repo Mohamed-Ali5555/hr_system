@@ -65,76 +65,107 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        //  return $request->all();
-        // $this->validate($request, [
-        //     'employer' => 'string|required',
-        //     'start_time' => 'required|after:' . Carbon::now()->format('h:i:s'),
-        //     'end_time' => 'required|after:start_time',
-        //     'today' => 'date|required',
-        //     'section_id'=>'required|exists:sections,id',
+        $this->validate($request, [
+            // 'employer' => 'string|required',
+            'start_time' => 'required|after:' . Carbon::now()->format('h:i:s'),
+            'end_time' => 'required|after:start_time',
+            'today' => 'date|required|after_or_equal:today',
+            'employer_id'=>'required|exists:employeers,id',
             
-        //        'status' => 'nullable|in:attendance,upsent',
+               'status' => 'nullable|in:attendance,upsent',
 
-        // // 'slug' =>'string|required|exists:sections,slug',
-        //     // 'photo' => 'required',
+        // 'slug' =>'string|required|exists:sections,slug',
+            // 'photo' => 'required',
 
-        // ],[
-        //     'section_id.required'    => 'من فضلك اختر اسم القسم  ',
+        ],[
+            'section_id.required'    => 'من فضلك اختر اسم القسم  ',
 
  
-        //  ]);
+         ]);
         // try {
+    //         if (is_array($request->status) || is_object($request->status))
+    //         {
+            
 
+    //     foreach($request->status as $attendance3 =>$attendance){
+    //         if($attendance=='attendance'){
+    //             // return true;
+    //             $status1='attendance';
+    //         }elseif($attendance=='upsent'){
+    //             // return false;
+    //             $status1='upsent';
 
-        // foreach($request->status as $attendance3 =>$attendance){
-        //     if($attendance=='attendance'){
-        //         // return true;
-        //         $status='attendance';
-        //     }elseif($attendance=='upsent'){
-        //         // return false;
-        //         $status='upsent';
-
-        //     }
+    //         }
       
-
-
+    //     }
+    // }
 
         $data=$request->all();
+        // return $request->all();
         $slug = Str::slug($request->input('employer_id'));
         $slug_count = Attendance::where('slug',$slug)->count();
         if($slug_count>0){
             $slug = time(). '-' .$slug;
         }
         $data['slug']=$slug;
-        //  $data['slug']='dddd';
-
-
-
-        //هنا معايا رقم الموظف ؟
-        $new = Attendance::create($data);
   
-        //لما تربط الغياب برقم الموظف ... هنعمل كده try save?
-        //لو عايز تجرب هنحط اى رقم دلوقت للموظف لحد ما تهندله انت فى الفورم .. اوك؟
+
         
-    
+        $new = Attendance::create($data);
+        // $new = Attendance::create([
+        //     'today' => $request->today,
+        //     'start_time' => $request->start_time,
+        //     'end_time' => $request->end_time,
+        //     // 'hour_price' => $request->hour_price,
+        //     'employer_id' => $request->employer_id,
+        //     'status' =>$request->status1,
+        //     'slug' =>$request->slug,
+
+        //     // 'status' =>$status1
+
+        //     // 'week_holiday' => implode(',', (array) $data['week_holiday']),
+        //     // 'week_holiday'=>json_encode($request->week_holiday),
+        // ]);
+        
+  
+        // return $request->all();
+
+        $salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
+        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
+        ->where('status' , '=' , 'attendance')
+        ->groupBy('employer_id')->where('employer_id',$request->employer_id)
+        ->first();
+
+
+        $salary_reports43 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as upsent')
+        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
+        ->where('status' , '=' , 'upsent')
+        ->groupBy('employer_id')->where('employer_id',$request->employer_id)
+        ->first();
+
+        // $total_attendance_days = \App\Models\Attendance::where('employer_id', $employer_id)->where('status', 'upsent')->count();
+
 
         $employer_salary=Salary_report::where('employer_id',$request->employer_id)
                                         ->update([
                                             'attendance_id'=>$new->id,
-                                            'status' => $request->status,
+                                            'attendance' => $salary_reports34->attendance,
+                                            
+                                            'upsent' => $salary_reports43->upsent
                                         ]);
 
-                                    //     return redirect()->route('Attendance.index')->with('success','Successfuly created Attendance');
-                                    // }finally{
-                                    //     return back()->with('error','something went wrong!');
-                                    // }
-                                    
+        //     return redirect()->route('Attendance.index')->with('success','Successfuly created Attendance');
+        // }finally{
+        //     return back()->with('error','something went wrong!');
+        // }
+        
         if($new){
             return redirect()->route('Attendance.index')->with('success','Successfuly created Attendance');
         }else{
             return back()->with('error','something went wrong!');
         }
     }
+
 
     /**
      * Display the specified resource.

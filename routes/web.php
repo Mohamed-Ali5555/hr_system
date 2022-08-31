@@ -33,6 +33,17 @@ Route::resource('addition_and_discount',\App\Http\Controllers\AdditionAndDiscoun
 Route::resource('official_holidays',\App\Http\Controllers\official_holidaysController::class);
 Route::resource('salary_reports',\App\Http\Controllers\Salary_reportController::class);
 
+
+// // archeve page and routes 
+Route::get('/archevis_reports',[\App\Http\Controllers\ArcheveController::class,'index'])->name('archevis_reports');
+// return from archeve to invoices table 
+Route::post('/archevis_reports/update',[\App\Http\Controllers\ArcheveController::class,'update'])->name('archeve.update');
+// delete 
+Route::delete('/archevis_reports/destroy',[\App\Http\Controllers\ArcheveController::class,'destroy'])->name('archeve.destroy');
+
+
+
+
 // Route::get('/invoices/{id}','Salary_reportController@invoices')->name('salary_reports.invoices');
 // Route::get('/salary_reports/invoices/{id}',[\App\Http\Controllers\Salary_reportController::class,'invoices'])->name('salary_reports.invoices');
 
@@ -43,6 +54,11 @@ Route::post('/Search_salary',[\App\Http\Controllers\Salary_reportController::cla
 //////////////////laravel exel in empoloyers
 Route::get('employees.excel', [\App\Http\Controllers\EmployeerController::class, 'export'])->name('employees.excel');
 //////////////////
+
+// priny invoices 
+Route::get('/print_invoices/{id}',[\App\Http\Controllers\Salary_reportController::class, 'print_invoices'])->name('salary_reports.print_invoices');
+
+
   //// larvel notifications
 
   Route::get('MarkAsRead_all',[\App\Http\Controllers\EmployeerController::class, 'MarkAsRead_all'])->name('MarkAsRead_all');

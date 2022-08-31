@@ -90,6 +90,7 @@ class EmployeerController extends Controller
  
          ]);
         $data=$request->all();
+        
         $slug = Str::slug($request->input('first_name'));
         $slug_count = Employeer::where('slug',$slug)->count();
         if($slug_count>0){
@@ -257,7 +258,7 @@ class EmployeerController extends Controller
 
         if($userUnreadNotification) {
             $userUnreadNotification->markAsRead();
-            return back();
+            return back()->with('success','you have show all');
         }
     }
 
@@ -267,9 +268,12 @@ class EmployeerController extends Controller
     ////mark one
     public function markNotification (Request $request)
     {
-      
+        // $employers  = Employeer::find($request->id);
+
         $notification_for_user = auth()->user()->unreadNotifications()->first()->update(['read_at' => now()]);
-          return back();
+          return back()->with('success','you have show one');
+        // return redirect()->route('employees.index')->with('success','you have show one');
+
 
     }
 }

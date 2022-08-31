@@ -17,7 +17,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title-wrap bar-success">
-                                            <h4 class="card-title" id="horz-layout-basic">General Settings Form </h4>
+                                            <h4 class="card-title" id="horz-layout-basic">General Settings Form <bold><i>Edit addition and discount </i></bold> </h4>
                                         </div>
                                         <p class="mb-0">This is the basic horizontal form with labels on left and cost
                                             estimation form is the default position.</p>
@@ -25,8 +25,9 @@
                                     <div class="card-body">
                                         <div class="px-3">
                                             <form class="form form-horizontal"
-                                                action="{{ route('addition_and_discount.store') }}" method="post">
+                                                action="{{ route('addition_and_discount.update',$addition_and_discounts->id) }}" method="post">
                                                 @csrf
+                                                        @method('patch')
                                                 <div class="form-body">
                                                     <h4 class="form-section">
                                                         <i class="icon-user"></i>General information
@@ -37,7 +38,7 @@
                                                         </label>
                                                         <div class="col-md-9">
                                                             <input type="number" id="hour_price" class="form-control"
-                                                                name="hour_price" placeholder="hour price" value="200">
+                                                                name="hour_price" placeholder="hour price" value="{{ $addition_and_discounts->hour_price }}">
 
                                                             @error('hour_price')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -50,7 +51,7 @@
                                                         </label>
                                                         <div class="col-md-9">
                                                             <input type="number" id="addition" class="form-control"
-                                                                name="addition" placeholder="write number of addition hour">
+                                                                name="addition" placeholder="write number of addition hour" value="{{ $addition_and_discounts->addition }}">
 
                                                             @error('addition')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -64,7 +65,7 @@
                                                         <div class="col-md-9">
                                                             <input type="number" id="discount" class="form-control"
                                                                 name="discount" placeholder="write number of discount hours"
-                                                                onChange="javascript:myFunction()">
+                                                                onChange="javascript:myFunction()" value="{{ $addition_and_discounts->discount }}">
 
                                                             @error('discount')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -77,7 +78,7 @@
                                                             Total: </label>
                                                         <div class="col-md-9">
                                                             <input type="number" id="total" class="form-control"
-                                                                name="total" readonly>
+                                                                name="total" readonly value="{{ $addition_and_discounts->total }}">
 
                                                         </div>
                                                     </div>
@@ -111,9 +112,11 @@
                                                         <div class="col-md-9">
                                                             <select id="employer_id" name="employer_id" class="form-control" >
                                                                      @foreach ($employers as $employer)
-                                                                    <option value="{{ $employer->id }}">
+                                                                    <option value="{{ $employer->id }}" {{$employer->id==$addition_and_discounts->employer_id? 'selected' : ''}}>
                                                                         {{ $employer->first_name }}</option>
                                                                 @endforeach
+
+
                                                             </select>
 
 
@@ -124,6 +127,9 @@
                                                     </div>
 
 
+                                                    @php 
+                                                     $days = json_decode($addition_and_discounts->week_holiday);
+                                                    @endphp 
 
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control" for="projectinput7">Weekly
@@ -131,25 +137,25 @@
                                                         <div class="col-md-9">
 
                                                             <input type="checkbox" id="vehicle1" name="week_holiday[]"
-                                                                value="Satrday">
+                                                                value="Satrday" {{  str_contains($addition_and_discounts->week_holiday,'Satrday') ? 'checked':''  }}>
                                                             <label for="sat"> Satrday</label><br>
-                                                            <input type="checkbox" id="vehicle2"
-                                                                name="week_holiday[]"value="Sunday">
+                                                            <input type="checkbox" id="vehicle2"name="week_holiday[]"  
+                                                                value="Sunday"  {{  str_contains($addition_and_discounts->week_holiday,'Sunday') ? 'checked':''  }}>
                                                             <label for="sun"> Sunday</label><br>
                                                             <input type="checkbox" id="vehicle3" name="week_holiday[]"
-                                                                value="Monday">
+                                                                value="Monday"  {{  str_contains($addition_and_discounts->week_holiday,'Monday') ? 'checked':''  }}>
                                                             <label for="mon"> Monday</label><br>
                                                             <input type="checkbox" id="vehicle3" name="week_holiday[]"
-                                                                value="thirthday">
+                                                               value="thirthday" {{  str_contains($addition_and_discounts->week_holiday,'thirthday') ? 'checked':''  }}>
                                                             <label for="mon"> thirthday</label><br>
                                                             <input type="checkbox" id="vehicle2" name="week_holiday[]"
-                                                                value="Tuesday">
+                                                               value="Tuesday"  {{  str_contains($addition_and_discounts->week_holiday,'Tuesday') ? 'checked':''  }}>
                                                             <label for="sun"> Tuesday</label><br>
                                                             <input type="checkbox" id="Tue" name="week_holiday[]"
-                                                                value="Turthday">
+                                                               value="Turthday"  {{  str_contains($addition_and_discounts->week_holiday,'Turthday') ? 'checked':''  }}>
                                                             <label for="sun"> Turthday</label><br>
                                                             <input type="checkbox" id="Tue" name="week_holiday[]"
-                                                                value="Friday">
+                                                                value="Friday" {{  str_contains($addition_and_discounts->week_holiday,'Friday') ? 'checked':''  }}>
                                                             <label for="Fri">Friday</label><br>
 
                                                             @error('week_holiday')

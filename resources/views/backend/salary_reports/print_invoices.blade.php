@@ -4,10 +4,10 @@
         <div class="main-content">
             <div class="content-wrapper">
                 <div class="container-fluid">
-                    <section class="invoice-template">
+                    <section class="invoice-template" id="print">
                         <div class="card">
                             <div class="card-body p-3">
-                                <div id="invoice-template" class="card-block">
+                                <div id="invoice-template" class="card-block" >
                                     <!-- Invoice Company Details -->
                                     <div id="invoice-company-details" class="row">
                                         <div class="col-6 text-left">
@@ -35,21 +35,23 @@
                                     <!-- Invoice Items Details -->
                                     <div id="invoice-items-details" class="pt-2">
                                         <div class="row">
-                                            <table class="table table-striped table-bordered zero-configuration mt-40">
+                                            <table class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
+                                                       <th>Id</th>
                                                         <th>Employee Name</th>
-                                                        <th>Phone</th>
+                                                        <th>section Name</th>
+                                                        {{-- <th>Phone</th> --}}
                                                         <th>Salary</th>
-                                                        <th>Attendance days</th>
-                                                        <th>Absent days</th>
-                                                        <th>Overtime hours</th>
+                                                        <th>hour price</th>
                                                         <th> Discount hours</th>
-                                                        <th>Extra</th>
-                                                        <th>
-                                                            discount</th>
-                                                        <th>Total</th>
+                                                        <th> Addition hours</th>
+
+                                                        {{-- <th>week_holiday days</th> --}}
+                                                        <th> total</th>
+                                                        <th>attendance days days</th>
+                                                        <th>upsent days days</th>
+                                                        <th> all Total</th>
 
                                                     </tr>
                                                 </thead>
@@ -61,13 +63,19 @@
                                                             {{-- <?php $i++; ?> --}}
                                                             <tr>
                                                                 <td>{{ $salary_reports->id }}</td>
-                                                                <td> {{ $salary_reports->employer->first_name }}</td>
-                                                                <td> {{ $salary_reports->employer->phone }}</td>
-                                                                <td> {{ $salary_reports->salary }}</td>
-                                                                <td> {{ $salary_reports->status }}</td>
-                                                                <td> {{ $salary_reports->addition }}</td>
+                                                                 <td> {{ $salary_reports->employer->first_name }}</td>
+                                                                <td> {{ $salary_reports->section->section_name }}</td>
+                                                                {{-- <td> {{ $salary_reports->employer->phone }}</td> --}}
+
+                                                                <td> {{ $salary_reports->employer->salary }}</td>
+                                                                <td> {{ $salary_reports->hour_price }}</td>
                                                                 <td> {{ $salary_reports->discount }}</td>
+                                                                <td> {{ $salary_reports->addition }}</td>
+                                                                {{-- <td> {{ $salary_reports->week_holiday }}</td> --}}
                                                                 <td> {{ $salary_reports->total }}</td>
+                                                                <td> {{ $salary_reports->attendance }}</td>
+                                                                <td> {{ $salary_reports->upsent }}</td>
+
                                                                 <td> {{ $salary_reports->all_total }}</td>
 
 
@@ -97,7 +105,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Acc name:</td>
-                                                                    <td class="text-right">Amanda Orton</td>
+                                                                 <td class="text-right"> {{ $salary_reports->employer->first_name }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>IBAN:</td>
@@ -142,9 +150,9 @@
                                                 </div>
                                                 <div class="text-center">
                                                     <p>Authorized person</p>
-                                                    <img src="../app-assets/img/pages/signature-scan.png" alt="signature"
+                                                    <img src="{{asset('backend/assets/img/pages/signature-scan.png')}}" alt="signature"
                                                         class="width-250">
-                                                    <h6>Amanda Orton</h6>
+                                                    <h6>{{\Auth::user()->name }}</h6>
                                                     <p class="text-muted">Managing Director</p>
                                                 </div>
                                             </div>
@@ -160,8 +168,8 @@
                                                     much for the next year and yet far too little for the next 10.</p>
                                             </div>
                                             <div class="col-md-3 col-sm-12 text-center">
-                                                <button type="button" class="btn btn-primary my-1"><i
-                                                        class="fa fa-paper-plane-o"></i> Send Invoice</button>
+                                                <button  class="btn btn-primary my-1"  onclick="printDiv()" id="print_div"><i
+                                                        class="fa fa-paper-plane-o" ></i> print Invoice</button>
                                             </div>
                                         </div>
                                     </div>
@@ -182,4 +190,20 @@
         </footer>
 
     </div>
+@endsection
+@section('scripts')
+ <script>
+         {{-- alert ('fffff'); --}}
+     function printDiv(){
+         var printContents = document.getElementById('print').innerHTML;
+           {{-- alert ('printContents'); --}}
+         var originalContents = document.body.innerHTML;
+         document.body.innerHTML = printContents;
+         window.print();
+         document.body.innerHTML = originalContents;
+         location.reload();
+     }
+    
+    
+    </script>
 @endsection

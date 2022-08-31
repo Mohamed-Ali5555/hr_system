@@ -18,8 +18,10 @@ class CreateSalaryReportsTable extends Migration
 
             // $table->string('first_name')->nullable();
             $table->float('salary')->default(0)->nullable();
-            $table->enum('status',['attendance ','upsent'])->default('attendance')->nullable();
-        
+            // $table->enum('status',['attendance ','upsent'])->default('attendance')->nullable();
+            $table->string('attendance')->nullable();
+            $table->string('upsent')->nullable();
+
             $table->decimal('discount')->nullable();
             $table->decimal('addition')->nullable();
 
@@ -40,6 +42,8 @@ class CreateSalaryReportsTable extends Migration
             $table->unsignedBigInteger('attendance_id')->nullable();
             $table->foreign('attendance_id')->references('id')->on('attendances')->onDelete('cascade');
             $table->decimal('all_total')->nullable();
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

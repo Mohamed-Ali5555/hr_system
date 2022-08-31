@@ -123,7 +123,7 @@
                          <a id="dropdownBasic3" href="#" data-toggle="dropdown"
                              class="nav-link position-relative dropdown-user-link dropdown-toggle">
                              <span class="avatar avatar-online"><img id="navbar-avatar"
-                                     src="../app-assets/img/portrait/small/avatar-s-3.jpg" alt="avatar" /></span>
+                                     src="{{asset('backend/assets/img/portrait/small/avatar-s-3.jpg')}}" alt="avatar" /></span>
                              <p class="d-none">User Settings</p>
                          </a>
                          <div aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">

@@ -308,6 +308,12 @@
 
                                                             {{-- @if (isset(\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('today', date('y-m-d'))->first()->employer_id)); --}}
                                                             {{-- ::where('today', date('y-m-d'))->first()->employer_id)) --}}
+                                                      
+                                                      
+                                                      {{-- /////////////////////////////////////////////////////////////////////////// --}}
+                                                      {{-- ////////////////////////////////////////////////////////////////////////// --}}
+                                                      
+                                                       {{-- ///     @if (isset(\App\Models\Attendance::where('today', date('y-m-d'))->first()->employer_id)) --}}
 
 
                                                                 <select name="status"
@@ -329,11 +335,11 @@
                                                                     class="form-control show-tick">
                                                                     <option value="" disabled>-- status --</option>
                                                                     <option value="attendance"
-                                                                        {{ old('status') == 'attendance' ? 'selected' : '' }}>
+                                                                        {{ old('status') == 'attendance' ? 'selected' : '' }} disabled>
                                                                         attendance
                                                                     </option>
                                                                     <option value="upsent"
-                                                                        {{ old('status') == 'upsent' ? 'selected' : '' }}>
+                                                                        {{ old('status') == 'upsent' ? 'selected' : '' }} disabled>
                                                                         upsant
                                                                     </option>
                                                                 </select>

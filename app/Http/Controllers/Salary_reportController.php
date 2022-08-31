@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Salary_report;
 use App\Models\Attendance;
 use App\Models\Employeer;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Salary_reportController extends Controller
 {
@@ -16,7 +17,7 @@ class Salary_reportController extends Controller
      */
     public function index()
     {
-        $salary_reports = Salary_report::all();
+        $salary_reports = Salary_report::orderBy('id','DESC')->get();
 
         // $salary_reports =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
         // ->whereBetween('today', ["2022-08-01", "2022-08-31"])
@@ -30,8 +31,21 @@ class Salary_reportController extends Controller
         // ->get()->toArray();
 
         // return dd($salary_reports);
+
+
+        // $salary_reports1 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
+        // ->whereBetween('today', ["2022-08-01", "2022-08-31"])
+        // ->where('status' , '=' , 'upsent')
+        // ->groupBy('employer_id')
+        // ->get()->toArray();
+        // return dd($salary_reports1);
+
+    
+
+        // dd($salary_reports);
         
         return view('backend.salary_reports.index',compact('salary_reports'));
+        // return json_encode($salary_reports);
     }
 
  
@@ -70,8 +84,8 @@ class Salary_reportController extends Controller
     {
         // echo 'dddddddddddd';
 
-        $salary_reports = Salary_report::findOrfail($id); 
-            return view ('backend.salary_reports.invoices',compact('salary_reports'));
+        // $salary_reports = Salary_report::findOrfail($id); 
+        //     return view ('backend.salary_reports.invoices',compact('salary_reports'));
     }
 
     /**
@@ -103,9 +117,29 @@ class Salary_reportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+          $id=$request->report_id;
+        $salary_reports = Salary_report::findOrfail($request->report_id);
+
+        
+
+
+        $id_page = $request->id_page;
+         if(!$id_page == 2)  {  //archeve methode  you can make this in new function
+  
+
+         $salary_reports->forceDelete();
+         return back()->with('success','salary_reports has been deleted from databaise');
+
+         }else{
+            // dd($id_page);
+            // return $request->all();
+            $salary_reports->delete();
+            return back()->with('success','salary_reports has been added to archeve');
+        }
+
+  
     }
 
     public function Search_salary(Request $request){
@@ -162,4 +196,13 @@ class Salary_reportController extends Controller
             
     //         }
     //     }
+
+
+    // print invoices 
+public function print_invoices($id){
+    $salary_reports = Salary_report::where('id',$id)->first();
+    // return $salary_reports;
+        return view('backend.salary_reports.print_invoices',compact('salary_reports'));
+
+}
 }

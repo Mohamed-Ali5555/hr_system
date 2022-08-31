@@ -5,15 +5,15 @@
             <p>Customize &amp; Preview in Real Time</p>
             <hr>
             <h6 class="text-center text-bold-500 mb-3 text-uppercase">Sidebar Background Image</h6>
-            <div class="cz-bg-image row">
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/01.jpg" width="50" height="100" alt="Bg image1" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/02.jpg" width="50" height="100" alt="Bg image2" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/03.jpg" width="50" height="100" alt="Bg image3" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/04.jpg" width="50" height="100" alt="Bg image4" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/05.jpg" width="50" height="100" alt="Bg image5" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/06.jpg" width="50" height="100" alt="Bg image6" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/07.jpg" width="50" height="100" alt="Bg image7" class="rounded box-shadow-2"></div>
-               <div class="col mb-3"><img src="../app-assets/img/sidebar-bg/08.jpg" width="50" height="100" alt="Bg image8" class="rounded box-shadow-2"></div>
+            <div class="cz-bg-image row"> 
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/01.jpg')}}" width="50" height="100" alt="Bg image1" class="rounded box-shadow-2" ></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/02.jpg')}}"  width="50" height="100" alt="Bg image2" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/03.jpg')}}"  width="50" height="100" alt="Bg image3" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/04.jpg')}}"  width="50" height="100" alt="Bg image4" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/05.jpg')}}"  width="50" height="100" alt="Bg image5" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/06.jpg')}}"  width="50" height="100" alt="Bg image6" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/07.jpg')}}"  width="50" height="100" alt="Bg image7" class="rounded box-shadow-2"></div>
+               <div class="col mb-3"><img src="{{asset('backend/assets/img/sidebar-bg/08.jpg')}}"  width="50" height="100" alt="Bg image8" class="rounded box-shadow-2"></div>
             </div>
             <hr>
             <div class="togglebutton">

@@ -60,7 +60,7 @@
                                        <div class="row text-white">
                                           <div class="col-6">
                                              <h1><i class="fa fa-usd background-round text-white p-2 font-medium-3"></i></h1>
-                                             <h4 class="pt-1 m-0 text-white">123 <i class="fa fa-long-arrow-up"></i></h4>
+                                             <h4 class="pt-1 m-0 text-white">100 % <i class="fa fa-long-arrow-up"></i></h4>
                                           </div>
                                           <div class="col-6 text-right pl-0">
                                              <h4 class="text-white mb-2">Employees</h4>
@@ -120,7 +120,7 @@
                                     if($count_attendance ==0){
                                         echo $count_attendance = 0;
                                     }else{
-                                        echo $count_attendance = $count_attendance / $count_all *100;
+                                        echo $count_attendance = number_format($count_attendance / $count_all *100);
                                     }
                                     @endphp
 
@@ -154,7 +154,7 @@
                                     if($count_attendance ==0){
                                         echo $count_attendance = 0;
                                     }else{
-                                        echo $count_attendance = $count_attendance / $count_all *100;
+                                        echo $count_attendance = number_format($count_attendance / $count_all *100);
                                     }
                                     @endphp
 
