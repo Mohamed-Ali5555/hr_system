@@ -11,7 +11,7 @@
                                     <!-- Invoice Company Details -->
                                     <div id="invoice-company-details" class="row">
                                         <div class="col-6 text-left">
-                                            <img src="../app-assets/img/logo.png" alt="company logo" class="mb-2"
+                                            <img src="{{asset('backend/assets/img/logo.png')}}" alt="company logo" class="mb-2"
                                                 width="70">
                                             <ul class="px-0 list-unstyled">
                                                 <li class="text-bold-800">Pioneer Solutions Company </li>

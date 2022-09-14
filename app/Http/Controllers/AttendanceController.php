@@ -128,24 +128,30 @@ class AttendanceController extends Controller
         // ]);
         
   
-        // return $request->all();
+// $employer_id = $request->input('employer_id');
+        // return $employer_id;
 
         $salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
+        ->whereBetween('today', ["2022-08-01", "2022-09-31"])
         ->where('status' , '=' , 'attendance')
         ->groupBy('employer_id')->where('employer_id',$request->employer_id)
         ->first();
 
+        // $status_count=\App\Models\Attendance::
+
 
         $salary_reports43 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as upsent')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
+        ->whereBetween('today', ["2022-08-01", "2022-09-31"])
         ->where('status' , '=' , 'upsent')
         ->groupBy('employer_id')->where('employer_id',$request->employer_id)
         ->first();
+     
 
         // $total_attendance_days = \App\Models\Attendance::where('employer_id', $employer_id)->where('status', 'upsent')->count();
 
+  if($salary_reports34 && $salary_reports43!=null){
 
+  
         $employer_salary=Salary_report::where('employer_id',$request->employer_id)
                                         ->update([
                                             'attendance_id'=>$new->id,
@@ -153,14 +159,23 @@ class AttendanceController extends Controller
                                             
                                             'upsent' => $salary_reports43->upsent
                                         ]);
-
+                            }else{
+                                
+                                $employer_salary=Salary_report::where('employer_id',$request->employer_id)
+                                ->update([
+                                    'attendance_id'=>$new->id,
+                                    'attendance' => 0,
+                                    
+                                    'upsent' => 0,
+                                ]);
+                            }
         //     return redirect()->route('Attendance.index')->with('success','Successfuly created Attendance');
         // }finally{
         //     return back()->with('error','something went wrong!');
         // }
         
         if($new){
-            return redirect()->route('Attendance.index')->with('success','Successfuly created Attendance');
+            return back()->with('success','Successfuly created Attendance');
         }else{
             return back()->with('error','something went wrong!');
         }

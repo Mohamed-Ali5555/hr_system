@@ -306,6 +306,8 @@
                                                         <label class="col-md-3 label-control">status: </label>
                                                         <div class="position-relative has-icon-left col-lg-9">
 
+                                 {{-- <input type="hidden" name="employer_id" id="employer_id" value="{{ $employer->employer_id }}"> --}}
+
                                                             {{-- @if (isset(\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('today', date('y-m-d'))->first()->employer_id)); --}}
                                                             {{-- ::where('today', date('y-m-d'))->first()->employer_id)) --}}
                                                       

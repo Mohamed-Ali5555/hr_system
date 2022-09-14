@@ -168,19 +168,27 @@ $salary =  \App\Models\Employeer::where('id', $request->employer_id)->value('sal
 
 
 
-$salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-->whereBetween('today', ["2022-08-01", "2022-08-31"])
-->where('status' , '=' , 'attendance')
-->groupBy('employer_id')->where('employer_id',$request->employer_id)
-->first();
+// $salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
+// ->whereBetween('today', ["2022-08-01", "2022-09-31"])
+// ->where('status' , '=' , 'attendance')
+// ->groupBy('employer_id')->where('employer_id',$request->employer_id)
+// ->first();
 
 
-$salary_reports43 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as upsent')
-->whereBetween('today', ["2022-08-01", "2022-08-31"])
-->where('status' , '=' , 'upsent')
-->groupBy('employer_id')->where('employer_id',$request->employer_id)
-->first();
+// $salary_reports43 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as upsent')
+// ->whereBetween('today', ["2022-08-01", "2022-09-31"])
+// ->orWhereNull('status' , '=' , 'upsent')
+// ->groupBy('employer_id')->where('employer_id',$request->employer_id)
+// ->first();
 
+$upsent_days=\App\Models\Salary_report::where('id',$request->employer_id)->value('upsent');
+// return $upsent_days;
+
+
+// return $salary_reports43->upsent;
+// $attendance = \App\Models\Salary_report::select('upsent');
+
+if($upsent_days!=null){
 
 $employer_salary=Salary_report::where('employer_id',$request->employer_id)
 ->update([
@@ -199,10 +207,20 @@ $employer_salary=Salary_report::where('employer_id',$request->employer_id)
     
 
     
-    'all_total' => $request->all_total= $salary+$request['total']-($salary_reports43->upsent*$request['hour_price']),
+    'all_total' => $request->all_total=    
+    ($salary+$request['total']) - (($upsent_days)*8*($request['hour_price'])),
 
 ]);
-
+}else{
+                                
+    $employer_salary=Salary_report::where('employer_id',$request->employer_id)
+    ->update([
+        'attendance_id'=>$new->id,
+        'attendance' => 0,
+        
+        'upsent' => 0,
+    ]);
+}
 
 // $addition->save();
 // $week_holiday = $request->input('week_holiday');
@@ -210,7 +228,7 @@ $employer_salary=Salary_report::where('employer_id',$request->employer_id)
 // $new = AdditionAndDiscount::create($week_holiday);
 
 
-return redirect()->route('addition_and_discount.index')->with('success','Successfuly created addition_and_discount');
+return back()->with('success','Successfuly created addition_and_discount');
 
 
     }

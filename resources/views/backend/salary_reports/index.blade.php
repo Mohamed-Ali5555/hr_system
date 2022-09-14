@@ -55,7 +55,8 @@
                                                 </form>
 
                                             </div>
-                                            <table class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
+                                            <table
+                                                class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th>Id</th>
@@ -88,11 +89,7 @@
 
 
 
-
-
-
-
-                                                  {{-- $status1 =  \App\Models\Attendance::selectRaw('id,employer_id , count(*) as attenense')
+                          {{-- $status1 =  \App\Models\Attendance::selectRaw('id,employer_id , count(*) as attenense')
                     ->whereBetween('today', ["2022-08-01", "2022-08-31"])
                     ->where('status' , '=' , 'attendance')
                     ->groupBy('employer_id','id')
@@ -140,38 +137,34 @@
                                                                 <td> {{ $salary_report->total }}</td>
                                                                 <td> {{ $salary_report->attendance }}</td>
                                                                 <td> {{ $salary_report->upsent }}</td>
-{{-- <td>{{ $status1}}</td> --}}
+                                                                {{-- <td>{{ $status1}}</td> --}}
                                                                 <td> {{ $salary_report->all_total }}</td>
 
                                                                 {{-- <td>
                                                                     {{-- {{ $salary_report->attendance->status }} --}}
-                                                                    {{-- @if ($salary_report->attendance->status == 'upsent')
+                                                                {{-- @if ($salary_report->attendance->status == 'upsent')
                                                                         {{ \App\Models\Attendance::where('status', 'upsent')->count() }}
                                                                     @else
                                                                         mmm
                                                                     @endif --}}
 
-                                                                    {{-- <p>{{ \App\Models\Attendance::where('id', $salary_report->attendance_id)->value('status', 'upsent')->count() }}
+                                                                {{-- <p>{{ \App\Models\Attendance::where('id', $salary_report->attendance_id)->value('status', 'upsent')->count() }}
                                                                     </p> --}}
 
 
-                                                                    {{-- {{$salary_reports34}} --}}
+                                                                {{-- {{$salary_reports34}} --}}
 
 
 
-                                                                    {{-- {{ $status1 = \App\Models\Attendance::select('id', $salary_report->employer->id)->where('status', 'upsent')->count() }} --}}
+                                                                {{-- {{ $status1 = \App\Models\Attendance::select('id', $salary_report->employer->id)->where('status', 'upsent')->count() }} --}}
 
-                                                                    {{-- {{ $salary_report->status }} --}}
+                                                                {{-- {{ $salary_report->status }} --}}
                                                                 </td> --}}
 
 
 
                                                                 <td>
-                                                                    {{-- <a href="{{ route('salary_reports.show', $salary_report->id) }}"
-                                                                        data-toggle="tooltip" title="edit"
-                                                                        class="float-left btn btn-sm btn-outline-warning"
-                                                                        data-placement="button"><i
-                                                                            class="icon-edit"></i></a> --}}
+                                                                   
 
 
 
@@ -185,10 +178,10 @@
 
 
                                                                             <a href="{{ route('salary_reports.print_invoices', $salary_report->id) }}"
-                                                                        data-toggle="tooltip" title="edit"
-                                                                        class="float-left btn btn-sm btn-outline-warning"
-                                                                        data-placement="button"><i
-                                                                            class="icon-edit"></i>print invoices</a>
+                                                                                data-toggle="tooltip" title="edit"
+                                                                                class="float-left btn btn-sm btn-outline-warning"
+                                                                                data-placement="button"><i
+                                                                                    class="icon-edit"></i>print invoices</a>
 
 
 
