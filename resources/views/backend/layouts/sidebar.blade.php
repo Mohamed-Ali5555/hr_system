@@ -27,8 +27,7 @@
                               <li><a href="{{ route('section.index') }}" class="menu-item"> <i class="icon-bar"></i>
                                       sections</a>
                               </li>
-                              <li><a href="{{ route('section.create') }}" class="menu-item">Add section</a>
-                              </li>
+                              
                           </ul>
                       </li>
                   @endcan
@@ -47,7 +46,12 @@
                       </li>
                   @endcan
 
-
+     @can('attendance')
+                      <li class=" nav-item"><a href="{{ route('Attendance.index') }}"><i class="icon-support"></i><span
+                                  data-i18n="" class="menu-title">
+                                  Attendance</span></a>
+                      </li>
+                  @endcan
 
                   @can('general_setting')
                       <li class="has-sub nav-item">
@@ -74,12 +78,7 @@
                         General Settings</span></a>
                      </li> --}}
 
-                  @can('attendance')
-                      <li class=" nav-item"><a href="{{ route('Attendance.index') }}"><i class="icon-support"></i><span
-                                  data-i18n="" class="menu-title">
-                                  Attendance</span></a>
-                      </li>
-                  @endcan
+             
                   @can('salary_report')
                       <li class=" nav-item"><a href="{{ route('salary_reports.index') }}"><i class="icon-layers"></i><span
                                   data-i18n="" class="menu-title">Salary report</span></a>

@@ -28,7 +28,8 @@ class CreateSalaryReportsTable extends Migration
             $table->string('week_holiday')->nullable();
             $table->decimal('hour_price')->nullable();
             $table->decimal('total')->nullable();
-      
+            $table->date('date')->nullable();
+
             $table->unsignedBigInteger('section_id')->nullable();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
           

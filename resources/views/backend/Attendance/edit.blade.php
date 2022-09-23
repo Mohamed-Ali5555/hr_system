@@ -96,7 +96,7 @@
                                                             <div class="position-relative has-icon-left">
                                                                 <input type="date" id="timesheetinput3"
                                                                     class="form-control" name="today"
-                                                                    value="{{ $attendances->today }}">
+                                                                    value="{{ $attendances->date }}">
 
                                                                 @error('today')
                                                                     <div class="alert alert-danger">{{ $message }}</div>

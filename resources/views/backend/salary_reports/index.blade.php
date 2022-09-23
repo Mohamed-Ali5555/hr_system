@@ -32,15 +32,13 @@
                                                     <div class="search-form">
                                                         <label>Employee Name :
                                                             <div class="col-lg-4" id="start_at">
-                                                                {{-- <label for="exampleFormControlSelect1">من
-                                                                            تاريخ</label> --}}
+                                                              
                                                                 <input class=" fc-datepicker" value="{{ $start_at ?? '' }}"
                                                                     name="start_at" placeholder="YYYY-MM-DD" type="date">
                                                             </div>
 
                                                             <div class="col-lg-4" id="end_at">
-                                                                {{-- <label for="exampleFormControlSelect1">الي
-                                                                            تاريخ</label> --}}
+                                                             
 
                                                                 <input class=" fc-datepicker" name="end_at"
                                                                     value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD"
@@ -80,44 +78,7 @@
 
 
 
-                                                    <?php
-
-                 {{-- $status=\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('attendances.status','upsent')->get(); --}}
-
-
-
-
-
-
-                          {{-- $status1 =  \App\Models\Attendance::selectRaw('id,employer_id , count(*) as attenense')
-                    ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-                    ->where('status' , '=' , 'attendance')
-                    ->groupBy('employer_id','id')
-                    ->get(); --}}
-
-
-    {{-- $salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        ->where('status' , '=' , 'attendance')
-        ->groupBy('employer_id')
-        ->get(); --}}
-
-   {{-- $salary_reports1 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        ->where('status' , '=' , 'upsent')
-        ->groupBy('employer_id')
-        ->get(); --}}
-
-
-          {{-- $status1 =  \App\Models\Attendance::where('status', 'upsent')->where('employer_id','24')->first(); --}}
-
-
-
-                                                    {{-- $status = \App\Models\Attendance::where( 'status', 'upsent')->count(); --}}
-                                                    
-                                                    $week_holiday = \App\Models\salary_report::where('week_holiday')->count();
-                                                    
-                                                    ?>
+      
 
                                                     @if ($salary_reports->count() > 0)
                                                         <?php $i = 0; ?>
@@ -126,6 +87,9 @@
                                                             <tr>
                                                                 <td>{{ $i }}</td>
                                                                 <td> {{ $salary_report->employer->first_name }}</td>
+                                                                {{-- <td> {{ $salary_report->date }}</td> --}}
+                                                                  {{-- <td>{{ \App\Models\section::where('id', $salary_report->employer_id)->value('section_name') }}</td>   --}}
+
                                                                 <td> {{ $salary_report->section->section_name }}</td>
                                                                 <td> {{ $salary_report->employer->phone }}</td>
 
@@ -137,29 +101,9 @@
                                                                 <td> {{ $salary_report->total }}</td>
                                                                 <td> {{ $salary_report->attendance }}</td>
                                                                 <td> {{ $salary_report->upsent }}</td>
-                                                                {{-- <td>{{ $status1}}</td> --}}
                                                                 <td> {{ $salary_report->all_total }}</td>
 
-                                                                {{-- <td>
-                                                                    {{-- {{ $salary_report->attendance->status }} --}}
-                                                                {{-- @if ($salary_report->attendance->status == 'upsent')
-                                                                        {{ \App\Models\Attendance::where('status', 'upsent')->count() }}
-                                                                    @else
-                                                                        mmm
-                                                                    @endif --}}
-
-                                                                {{-- <p>{{ \App\Models\Attendance::where('id', $salary_report->attendance_id)->value('status', 'upsent')->count() }}
-                                                                    </p> --}}
-
-
-                                                                {{-- {{$salary_reports34}} --}}
-
-
-
-                                                                {{-- {{ $status1 = \App\Models\Attendance::select('id', $salary_report->employer->id)->where('status', 'upsent')->count() }} --}}
-
-                                                                {{-- {{ $salary_report->status }} --}}
-                                                                </td> --}}
+                                                     
 
 
 
@@ -257,7 +201,7 @@
 
                                                                             <div class="modal-body">
                                                                                 <p>هل انت متاكد من عملية الحذف ؟</p><br>
-                                                                                <input type="text" name="report_id"
+                                                                                <input type="hidden" name="report_id"
                                                                                     id="report_id"
                                                                                     value="{{ $salary_report->id }}">
                                                                                 <input class="form-control"
@@ -311,11 +255,11 @@
                                                                             {{ csrf_field() }}
                                                                             <div class="modal-body">
                                                                                 <p>هل انت متاكد من عملية الارشفه ؟</p><br>
-                                                                                <input type="text" name="report_id"
+                                                                                <input type="hidden" name="report_id"
                                                                                     id="report_id"
                                                                                     value="{{ $salary_report->id }}">
 
-                                                                                <input type="text" name="id_page"
+                                                                                <input type="hidden" name="id_page"
                                                                                     id="id_page" value="2">
 
                                                                             </div>

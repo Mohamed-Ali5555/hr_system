@@ -72,7 +72,7 @@ class EmployeerController extends Controller
             'date' => 'date|required',
             'type' => 'required|in:mail,femail',
             'date_of_contact' => 'date|required',
-            'start_time' => 'required|after:' . Carbon::now()->format('h:i:s'),
+            'start_time' => 'required',
             'end_time' => 'required|after:start_time',
             'national_id'=>'required|max:14|min:14',
             'nationality'=>'string|required',

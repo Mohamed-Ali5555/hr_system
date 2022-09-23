@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Salary_report;
 use App\Models\Attendance;
 use App\Models\Employeer;
+use App\Models\section;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Salary_reportController extends Controller
@@ -143,8 +145,14 @@ class Salary_reportController extends Controller
     }
 
     public function Search_salary(Request $request){
-   
-        $salary_reports = Salary_report::all();
+        $salary_reports = Salary_report::orderBy('id','DESC')->get();
+
+        // $salary_reports = Salary_report::all();
+        // $sections = section::select('id', 'section_name')->get();
+
+        $sections  = section ::all();
+        $employers = Employeer::all();
+        $today = Attendance::where('employer_id', $request->employer_id)->where('date', $request->today);
 
      // في حالة عدم تحديد تاريخ
             if ( $request->start_at  && $request->end_at) {
@@ -153,7 +161,7 @@ class Salary_reportController extends Controller
     
                   
               $salary_reports = Salary_report::whereBetween('created_at',[$start_at,$end_at])->get();
-              return view('backend.salary_reports.index',compact('salary_reports','start_at','end_at','salary_reports'))->withDetails($salary_reports);
+              return view('backend.salary_reports.index',compact('salary_reports','start_at','end_at','salary_reports','employers','sections'))->withDetails($salary_reports);
               
             }
             

@@ -21,7 +21,8 @@ class CreateAttendancesTable extends Migration
 
             $table->time('start_time');
             $table->time('end_time');
-            $table->date('today');
+            $table->date('today')->nullable();
+            $table->date('date')->nullable();
 
             $table->unsignedBigInteger('employer_id');
             $table->foreign('employer_id')->references('id')->on('employeers')->onDelete('cascade');

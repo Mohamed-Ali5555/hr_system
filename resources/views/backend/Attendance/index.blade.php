@@ -115,7 +115,7 @@
 
                                                                     {{-- {{ $attendance->employer->first_name }} --}}
                                                                 </td>
-                                                                <td>{{ $attendance->today }}</td>
+                                                                <td>{{ $attendance->date }}</td>
 
                                                                 <td>{{ date("h:i a", strtotime($attendance->start_time)) }}</td>
                                                                 <td>{{ date("h:i a", strtotime($attendance->end_time)) }}</td>
@@ -235,7 +235,7 @@
                                                         <div class="col-md-9">
                                                             <div class="position-relative has-icon-left">
                                                                 <input type="date" id="timesheetinput3"
-                                                                    class="form-control" name="today">
+                                                                    class="form-control" name="today" value="<?php echo date('Y-m-d'); ?>">
 
 
 
