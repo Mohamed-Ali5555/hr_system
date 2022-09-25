@@ -80,7 +80,7 @@
                                                                 @endforeach
                                                                 </option>
                                                             </select>
-                                                            @error('employer')
+                                                            @error('employer_id')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                             @enderror
 
@@ -95,8 +95,8 @@
                                                         <div class="col-md-9">
                                                             <div class="position-relative has-icon-left">
                                                                 <input type="date" id="timesheetinput3"
-                                                                    class="form-control" name="today"
-                                                                    value="{{ $attendances->date }}">
+                                                                    class="form-control" name="date"
+                                                                    value="{{ $attendances->absent_date }}">
 
                                                                 @error('today')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -113,13 +113,13 @@
                                                 <div class=" row">
                                                     <div class="col-md-12">
                                                         <div class=" row form-group">
-                                                            <label class="col-md-3 label-control">Start time: </label>
+                                                            <label class="col-md-3 label-control">attendance_time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
                                                                 <input type="time" id="timesheetinput5"
-                                                                    class="form-control" name="start_time"
-                                                                    value="{{ $attendances->start_time }}">
+                                                                    class="form-control" name="attendance_time"
+                                                                    value="{{ $attendances->attendance_time }}">
 
-                                                                @error('start_time')
+                                                                @error('attendance_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                                 <div class="form-control-position">
@@ -128,15 +128,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+
                                                     <div class="col-md-12">
                                                         <div class=" row form-group">
-                                                            <label class="col-md-3 label-control">End time: </label>
+                                                            <label class="col-md-3 label-control">depature_time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
                                                                 <input type="time" id="timesheetinput6"
-                                                                    class="form-control" name="end_time"
-                                                                    value="{{ $attendances->end_time }}">
+                                                                    class="form-control" name="depature_time"
+                                                                    value="{{ $attendances->depature_time }}">
 
-                                                                @error('end_time')
+                                                                @error('depature_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                                 <div class="form-control-position">
@@ -155,13 +157,13 @@
                                                     <div class=" row form-group">
                                                         <label class="col-md-3 label-control">status: </label>
                                                         <div class="position-relative has-icon-left col-lg-9">
-                                                            <select name="status" class="form-control show-tick">
+                                                            <select name="value_status" class="form-control show-tick">
                                                                 <option value="" disabled>-- status --</option>
-                                                                <option value="attendance"
+                                                                <option value="1"
                                                                     {{ $attendances->status == 'attendance' ? 'selected' : '' }}>
                                                                     attendance
                                                                 </option>
-                                                                <option value="upsent"
+                                                                <option value="2"
                                                                     {{ $attendances->status == 'upsent' ? 'selected' : '' }}>
                                                                     upsent
                                                                 </option>

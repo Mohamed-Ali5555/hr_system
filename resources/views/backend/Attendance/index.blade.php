@@ -115,15 +115,15 @@
 
                                                                     {{-- {{ $attendance->employer->first_name }} --}}
                                                                 </td>
-                                                                <td>{{ $attendance->date }}</td>
+                                                                <td>{{ $attendance->absent_date }}</td>
 
-                                                                <td>{{ date("h:i a", strtotime($attendance->start_time)) }}</td>
-                                                                <td>{{ date("h:i a", strtotime($attendance->end_time)) }}</td>
+                                                                <td>{{ date("h:i a", strtotime($attendance->attendance_time)) }}</td>
+                                                                <td>{{ $attendance->depature_time }}</td>
 
 
                                                                 <td>
 
-                                                                    @if ($attendance->status == 'attendance')
+                                                                    @if ($attendance->value_status == 1) 
                                                                         <span
                                                                             class="badge badge-success">{{ $attendance->status }}</span>
                                                                     @else
@@ -235,11 +235,11 @@
                                                         <div class="col-md-9">
                                                             <div class="position-relative has-icon-left">
                                                                 <input type="date" id="timesheetinput3"
-                                                                    class="form-control" name="today" value="<?php echo date('Y-m-d'); ?>">
+                                                                    class="form-control" name="date" value="<?php echo date('Y-m-d'); ?>">
 
 
 
-                                                                @error('today')
+                                                                @error('date')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
 
@@ -259,11 +259,11 @@
                                                             <label class="col-md-3 label-control">Start time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
                                                                 <input type="time" id="timesheetinput5"
-                                                                    class="form-control" name="start_time">
+                                                                    class="form-control" name="attendance_time">
 
 
 
-                                                                @error('start_time')
+                                                                @error('attendance_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
 
@@ -278,11 +278,11 @@
                                                             <label class="col-md-3 label-control">End time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
                                                                 <input type="time" id="timesheetinput6"
-                                                                    class="form-control" name="end_time">
+                                                                    class="form-control" name="depature_time">
 
 
 
-                                                                @error('end_time')
+                                                                @error('depature_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
 
@@ -306,28 +306,17 @@
                                                         <label class="col-md-3 label-control">status: </label>
                                                         <div class="position-relative has-icon-left col-lg-9">
 
-                                 {{-- <input type="hidden" name="employer_id" id="employer_id" value="{{ $employer->employer_id }}"> --}}
 
-                                                            {{-- @if (isset(\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('today', date('y-m-d'))->first()->employer_id)); --}}
-                                                            {{-- ::where('today', date('y-m-d'))->first()->employer_id)) --}}
-                                                      
-                                                      
-                                                      {{-- /////////////////////////////////////////////////////////////////////////// --}}
-                                                      {{-- ////////////////////////////////////////////////////////////////////////// --}}
-                                                      
-                                                       {{-- ///     @if (isset(\App\Models\Attendance::where('today', date('y-m-d'))->first()->employer_id)) --}}
-
-
-                                                                <select name="status"
+                                                                <select name="value_status"
                                                                     class="form-control show-tick">
                                                                     <option value="" disabled>-- status --</option>
-                                                                    <option value="attendance"
-                                                                        {{ old('status') == 'attendance' ? 'selected' : '' }}
+                                                                    <option value="1"
+                                                                        {{ old('value_status') == '1' ? 'selected' : '' }}
                                                                         >
                                                                         attendance
                                                                     </option>
-                                                                    <option value="upsent"
-                                                                        {{ old('status') == 'upsent' ? 'selected' : '' }}
+                                                                    <option value="2"
+                                                                        {{ old('value_status') == '2' ? 'selected' : '' }}
                                                                         >
                                                                         upsant
                                                                     </option>
@@ -391,7 +380,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     {{-- //// DELETE SECTION --}}
     <script>
@@ -400,28 +389,32 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $('.dlBtn').click(function(e) {
+           $('.dlBtn').click(function(e) {
             var form = $(this).closest('form');
             var dataID = $(this).data('id');
             e.preventDefault();
 
-            swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    form.submit();
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Your imaginary file is safe!");
-                    }
-                });
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                form.submit();
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+
+
         })
     </script>
 @endsection

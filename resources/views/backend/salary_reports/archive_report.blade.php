@@ -16,7 +16,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title-wrap bar-success">
-                                            <h4 class="card-title">Salary report</h4>
+                                            <h4 class="card-title">Salary archeve</h4>
                                         </div>
                                     </div>
                                     <div class="card-body collapse show">
@@ -55,21 +55,23 @@
                                                 </form>
 
                                             </div>
-                                            <table class="table table-striped table-bordered zero-configuration mt-40">
+                                            <table class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th>Id</th>
                                                         <th>Employee Name</th>
+                                                        <th>report date</th>
                                                         <th>Phone</th>
                                                         <th>Salary</th>
-                                                        <th>Attendance days</th>
-                                                        <th>Absent days</th>
-                                                        <th>Overtime hours</th>
-                                                        <th> Discount hours</th>
-                                                        <th>Extra</th>
-                                                        <th>
-                                                            upsent days days</th>
-                                                        <th>Total</th>
+                                                        <th>hour price</th>
+                                                        <th> total_absent_days</th>
+                                                        <th> total_attendace_days</th>
+                                                        <th> total_hours_amount</th>
+                                                        <th> total_price_amount</th>
+
+                                                        <th> total_hours_overtime</th>
+
+                                                        <th> Total</th>
 
                                                     </tr>
                                                 </thead>
@@ -77,48 +79,6 @@
 
 
 
-                                                    <?php
-
-                 {{-- $status=\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('attendances.status','upsent')->get(); --}}
-
-
-
-
-
-
-
-
-
-
-                                                  {{-- $status1 =  \App\Models\Attendance::selectRaw('id,employer_id , count(*) as attenense')
-                    ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-                    ->where('status' , '=' , 'attendance')
-                    ->groupBy('employer_id','id')
-                    ->get(); --}}
-
-
-    $salary_reports34 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        ->where('status' , '=' , 'attendance')
-        ->groupBy('employer_id')
-        ->get();
-
-   $salary_reports1 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        ->where('status' , '=' , 'upsent')
-        ->groupBy('employer_id')
-        ->get();
-
-
-          {{-- $status1 =  \App\Models\Attendance::select('id', 'employer_id')->where('status', 'upsent')->count(); --}}
-
-
-
-                                                    {{-- $status = \App\Models\Attendance::where( 'status', 'upsent')->count(); --}}
-                                                    
-                                                    $week_holiday = \App\Models\salary_report::where('week_holiday')->count();
-                                                    
-                                                    ?>
 
                                                     @if ($salary_reports->count() > 0)
                                                         <?php $i = 0; ?>
@@ -127,38 +87,22 @@
                                                             <tr>
                                                                 <td>{{ $i }}</td>
                                                                 <td> {{ $salary_report->employer->first_name }}</td>
-                                                                <td> {{ $salary_report->section->section_name }}</td>
+                                                                <td> {{ $salary_report->report_date }}</td>
+                                                                {{-- <td>{{ \App\Models\section::where('id', $salary_report->employer_id)->value('section_name') }}</td> --}}
+
+                                                                {{-- <td> {{ $salary_report->section->section_name }}</td> --}}
+                                                                <td> {{ $salary_report->employer->phone }}</td>
+
                                                                 <td> {{ $salary_report->employer->salary }}</td>
-                                                                <td> {{ $salary_report->our_price }}</td>
-                                                                <td> {{ $week_holiday }}</td>
+                                                                <td> {{ $salary_report->employer->hour_price }}</td>
+                                                                <td> {{ $salary_report->total_absent_days }}</td>
+                                                                <td> {{ $salary_report->total_attendace_days }}</td>
+                                                                <td> {{ $salary_report->total_hours_amount }}</td>
+                                                                <td> {{ $salary_report->total_price_amount }}</td>
+                                                                <td> {{ $salary_report->total_hours_overtime }}</td>
+
+
                                                                 <td> {{ $salary_report->total }}</td>
-                                                                <td> {{ $salary_report->discount }}</td>
-                                                                <td> {{ $salary_report->addition }}</td>
-                                                                <td> {{ $salary_report->all_total }}</td>
-
-                                                                <td>
-                                                                    {{-- {{ $salary_report->attendance->status }} --}}
-                                                                    {{-- @if ($salary_report->attendance->status == 'upsent')
-                                                                        {{ \App\Models\Attendance::where('status', 'upsent')->count() }}
-                                                                    @else
-                                                                        mmm
-                                                                    @endif --}}
-
-                                                                    {{-- <p>{{ \App\Models\Attendance::where('id', $salary_report->attendance_id)->value('status', 'upsent')->count() }}
-                                                                    </p> --}}
-
-
-                                                                    {{-- {{$salary_reports34}} --}}
-
-
-
-                                                                    {{-- {{ $status1 = \App\Models\Attendance::select('id', $salary_report->employer->id)->where('status', 'upsent')->count() }} --}}
-
-                                                                    {{-- {{ $salary_report->status }} --}}
-                                                                </td>
-
-                                                                <td> {{ $salary_report->attendance }}</td>
-                                                                <td> {{ $salary_report->upsent }}</td>
 
 
                                                                 <td>
@@ -311,7 +255,7 @@
                                                                             {{-- {{ method_field('patch') }} --}}
                                                                             {{ csrf_field() }}
                                                                             <div class="modal-body">
-                                                                                <p>هل انت متاكد من عملية الارشفه ؟</p><br>
+                                                                                <p>هل انت متاكد من عملية الارجاع ؟</p><br>
                                                                                 <input type="text" name="report_id"
                                                                                     id="report_id"
                                                                                     value="{{ $salary_report->id }}">

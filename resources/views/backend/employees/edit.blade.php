@@ -42,10 +42,10 @@
                                     <div class="card-body">
                                         <div class="px-3">
 
-                                            <form class="form form-horizontal" action="{{ route('employees.update',$employer->id) }}"
-                                                method="post">
+                                            <form class="form form-horizontal"
+                                                action="{{ route('employees.update', $employer->id) }}" method="post">
                                                 @csrf
-                                                        @method('patch')
+                                                @method('patch')
                                                 <div class="form-body">
                                                     <h4 class="form-section">
                                                         <i class="icon-user"></i> Personal Details
@@ -67,7 +67,7 @@
                                                         </label>
                                                         <div class="col-md-9">
                                                             <input type="text" id="projectinput2" class="form-control"
-                                                                name="address"  value="{{ $employer->address }}">
+                                                                name="address" value="{{ $employer->address }}">
 
                                                             @error('address')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -112,7 +112,7 @@
                                                             <div class="position-relative has-icon-left">
                                                                 <input type="date" id="timesheetinput3"
                                                                     class="form-control" name="date"
-                                                                  value="{{ $employer->date }}">
+                                                                    value="{{ $employer->date }}">
 
                                                                 @error('date')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -130,12 +130,12 @@
                                                         <select id="projectinput7" name="type" class="form-control">
                                                             <option value="">-- Gender --</option>
                                                             <option value="mail"
-                                                                 {{ $employer->type == 'mail' ? 'selected' : '' }}>mail
+                                                                {{ $employer->type == 'mail' ? 'selected' : '' }}>mail
                                                             </option>
 
 
                                                             <option value="femail"
-                                                                 {{ $employer->type == 'femail' ? 'selected' : '' }}>femail
+                                                                {{ $employer->type == 'femail' ? 'selected' : '' }}>femail
                                                             </option>
 
 
@@ -151,7 +151,8 @@
                                                         contract: </label>
                                                     <div class="col-md-9">
                                                         <input type="date" id="projectinput10" class="form-control"
-                                                            name="date_of_contact" value="{{ $employer->date_of_contact }}">
+                                                            name="date_of_contact"
+                                                            value="{{ $employer->date_of_contact }}">
 
 
                                                         @error('date_of_contact')
@@ -164,16 +165,16 @@
                                                         <div class=" row form-group">
                                                             <label class="col-md-3 label-control">Start time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
-                                                                <input type="time" id="timesheetinput5"
+                                                                <input type="time" id="start_time"
                                                                     class="form-control" name="start_time"
                                                                     value="{{ $employer->start_time }}">
 
-                                                              
+
                                                                 <div class="form-control-position">
                                                                     <i class="ft-clock"></i>
                                                                 </div>
 
-																  @error('start_time')
+                                                                @error('start_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
@@ -183,18 +184,17 @@
                                                         <div class=" row form-group">
                                                             <label class="col-md-3 label-control">End time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
-                                                                <input type="time" id="timesheetinput6"
-                                                                    class="form-control" name="end_time"
-                                                                   value="{{ $employer->end_time }}">
+                                                                <input type="time" id="end_time" class="form-control"
+                                                                    name="end_time" value="{{ $employer->end_time }}">
 
 
-                                                               
+
 
                                                                 <div class="form-control-position">
                                                                     <i class="ft-clock"></i>
                                                                 </div>
 
-																 @error('end_time')
+                                                                @error('end_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
@@ -212,17 +212,14 @@
                                                     </label>
                                                     <div class="col-md-9">
                                                         <select name="section_id" class="form-control show-tick">
-                                                            <option value="">-- Sections --</option>
 
                                                             @foreach (\App\Models\section::get() as $section)
                                                                 <option value="{{ $section->id }}"
-                                                                     {{ $section->id == $employer->section_id ? 'selected' : '' }}>
-                                                                    {{ $section->section_name }}</option>
-
-
-
+                                                                    {{ $section->id == $employer->section_id ? 'selected' : '' }}>
+                                                                    {{ $section->section_name }}
+                                                                    </option>
                                                             @endforeach
-                                                            </option>
+                                                          
                                                         </select>
 
                                                         @error('section_id')
@@ -232,12 +229,27 @@
                                                 </div>
 
 
+
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control" for="projectinput7">hour price:
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" id="hour_price" class="form-control"
+                                                            name="hour_price" value="{{ $employer->hour_price }}"
+                                                            onChange="javascript:myFunction()">
+
+                                                        @error('salary')
+                                                            <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control" for="projectinput7">Salary:
                                                     </label>
                                                     <div class="col-md-9">
-                                                        <input type="text" id="projectinput2" class="form-control"
-                                                            name="salary" value="{{ $employer->salary }}">
+                                                        <input type="text" id="salary" class="form-control"
+                                                            name="salary" value="{{ $employer->salary }}" readonly>
 
                                                         @error('salary')
                                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -288,16 +300,16 @@
                                                                 name="photo" value="{{ $employer->photo }}">
 
 
-                                                        
+
                                                         </div>
 
 
                                                         <div id="holder" style="margin-top:15px;max-height:100px;">
                                                         </div>
 
-                                                            @error('photo')
-                                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                            @enderror
+                                                        @error('photo')
+                                                            <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -349,4 +361,39 @@
     <script>
         $('#lfm').filemanager('image');
     </script>
+
+
+
+
+    {{-- ///////////////////////////////////////////////////////// --}}
+
+    <script>
+        function myFunction() {
+
+
+            var start_time = parseFloat(document.getElementById('start_time').value); //نسبه الضريبه
+            var end_time = parseFloat(document.getElementById('end_time').value);
+            var hour_price = parseFloat(document.getElementById('hour_price').value); // ظقيمة ضريبة القيمة المض
+
+
+            var full_time = end_time - start_time; // 6 hours example
+
+
+            var salary = (full_time * hour_price * 22);
+
+            // 6* 50 =300 *22 =6600
+
+
+            document.getElementById("salary").value = salary; //ارقام عشريه
+
+
+
+
+
+
+
+        }
+    </script>
+
+    {{-- ///////////////////////////////////////////////////////// --}}
 @endsection

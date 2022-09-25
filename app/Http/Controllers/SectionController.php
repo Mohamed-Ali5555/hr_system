@@ -56,11 +56,6 @@ class SectionController extends Controller
         $new = section::create($data);
 
 
-        // $section_id = section::latest()->first()->id;  // this code give invoices id to invoices details
-        // $new=  Salary_report::create([
-        //     'section_id'=>$section_id,
-        
-        // ]);
         if($new){
             return redirect()->route('section.index')->with('success','Successfuly created section');
         }else{
@@ -111,7 +106,6 @@ class SectionController extends Controller
     //   // return $request;
       $validated = $request->validate([
         'section_name' => 'string|required',
-        // 'slug' =>'string|required|exists:sections,slug',
         'photo' => 'required',
 
     ]);

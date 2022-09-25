@@ -15,9 +15,11 @@ class CreateOfficialHolidaysTable extends Migration
     {
         Schema::create('official_holidays', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('date');
+            $table->string('week_holiday')->nullable();
+            $table->string('employer_id')->nullable();
 
+            $table->unsignedBigInteger('section_id')->unsigned();
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->timestamps();
         });
     }

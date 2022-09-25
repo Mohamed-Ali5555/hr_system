@@ -19,106 +19,17 @@ class Salary_reportController extends Controller
      */
     public function index()
     {
+        // {{-- $status=\App\Models\Employeer::join('attendances','attendances.employer_id','=','employeers.id')->where('attendances.status','upsent')->get(); --}}
+
+        // $salary_reports = Salary_report::join('employees', 'employees.id', '=', 'reports.employee_id')->groupBy('total_Absent_days')->get(['reports.*', 'employees.*']);
+        // $salary_reports=Salary_report::innerjoin('employeers','employeers.id', '=' , 'salary_reports.employer_id')->groupBy('employer_id')->get(['salary_reports.*', 'employeers.*']);
         $salary_reports = Salary_report::orderBy('id','DESC')->get();
 
-        // $salary_reports =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        // ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        // ->where('status' , '=' , 'attendance')
-        // ->groupBy('employer_id','id')
-        // ->get()->toArray();
-        // $invoices = invoices::select('*')->where('status','=',$request->invoice_checked1)->get();
 
-        // $status = \App\Models\Attendance::select('employer_id','status as attendance')->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        // //  ->groupBy('employer_id','id')
-        // ->get()->toArray();
-
-        // return dd($salary_reports);
-
-
-        // $salary_reports1 =  \App\Models\Attendance::selectRaw('employer_id , count(*) as attendance')
-        // ->whereBetween('today', ["2022-08-01", "2022-08-31"])
-        // ->where('status' , '=' , 'upsent')
-        // ->groupBy('employer_id')
-        // ->get()->toArray();
-        // return dd($salary_reports1);
-
-    
-
-        // dd($salary_reports);
-        
         return view('backend.salary_reports.index',compact('salary_reports'));
-        // return json_encode($salary_reports);
     }
 
- 
 
-
-
-    public function invoices(){
-        echo 'dddddddddddd';
-        $salary_reports = Salary_report::findOrfail(); 
-        return view ('salary_reports.invoices',compact('salary_reports'));
-
-    }
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // echo 'dddddddddddd';
-
-        // $salary_reports = Salary_report::findOrfail($id); 
-        //     return view ('backend.salary_reports.invoices',compact('salary_reports'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
           $id=$request->report_id;
@@ -160,7 +71,7 @@ class Salary_reportController extends Controller
                 $end_at = date($request->end_at);
     
                   
-              $salary_reports = Salary_report::whereBetween('created_at',[$start_at,$end_at])->get();
+              $salary_reports = Salary_report::whereBetween('report_date',[$start_at,$end_at])->get();
               return view('backend.salary_reports.index',compact('salary_reports','start_at','end_at','salary_reports','employers','sections'))->withDetails($salary_reports);
               
             }
@@ -173,37 +84,6 @@ class Salary_reportController extends Controller
             
             }
         }
-
-    // public function Search_attendances(Request $request){
-   
-    
-    //  // في حالة عدم تحديد تاريخ
-    //         if ( $request->year  && $request->month) {
-    //             $year = $this->input->post("year");
-    //             $year = $year != "" ? $year : date("Y");
-    //             $month = $this->input->post("month");
-    //             $month = $month != "" ? $month : date("m");
-
-    //             return $request->all();
-    
-
-    //             $attendances = Employeer::whereYear('created_at', '=', $year)
-    //           ->whereMonth('created_at', '=', $month)
-    //           ->get();
-                  
-    //         //   $attendances = Employeer::where('created_at',[$year,$month])->get();
-    //           return view('backend.salary_report.index',compact('attendances','year','month'))->withDetails($attendances);
-              
-    //         }
-            
-    //         // في حالة تحديد تاريخ استحقاق
-    //         else {
-               
-    //     //   echo "thee is error";
-    //             $salary_reports  = Salary_report ::get();
-            
-    //         }
-    //     }
 
 
     // print invoices 

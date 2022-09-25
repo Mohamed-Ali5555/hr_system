@@ -32,13 +32,13 @@
                                                     <div class="search-form">
                                                         <label>Employee Name :
                                                             <div class="col-lg-4" id="start_at">
-                                                              
+
                                                                 <input class=" fc-datepicker" value="{{ $start_at ?? '' }}"
                                                                     name="start_at" placeholder="YYYY-MM-DD" type="date">
                                                             </div>
 
                                                             <div class="col-lg-4" id="end_at">
-                                                             
+
 
                                                                 <input class=" fc-datepicker" name="end_at"
                                                                     value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD"
@@ -59,18 +59,20 @@
                                                     <tr>
                                                         <th>Id</th>
                                                         <th>Employee Name</th>
-                                                        <th>section Name</th>
+                                                        <th>report date</th>
                                                         <th>Phone</th>
                                                         <th>Salary</th>
                                                         <th>hour price</th>
-                                                        <th> Discount hours</th>
-                                                        <th> Addition hours</th>
 
-                                                        <th>week_holiday days</th>
-                                                        <th> total</th>
-                                                        <th>attendance days days</th>
-                                                        <th>upsent days days</th>
-                                                        <th> all Total</th>
+
+                                                        <th> total_attendace_days</th>
+                                                        <th> total_absent_days</th>
+
+                                                        <th> total hours discount</th>
+
+                                                        <th> total_hours_overtime</th>
+                                                        <th> total_hours_amount</th>
+                                                        <th> Total</th>
 
                                                     </tr>
                                                 </thead>
@@ -78,7 +80,7 @@
 
 
 
-      
+
 
                                                     @if ($salary_reports->count() > 0)
                                                         <?php $i = 0; ?>
@@ -87,28 +89,30 @@
                                                             <tr>
                                                                 <td>{{ $i }}</td>
                                                                 <td> {{ $salary_report->employer->first_name }}</td>
-                                                                {{-- <td> {{ $salary_report->date }}</td> --}}
-                                                                  {{-- <td>{{ \App\Models\section::where('id', $salary_report->employer_id)->value('section_name') }}</td>   --}}
+                                                                <td> {{ $salary_report->report_date }}</td>
+                                                                {{-- <td>{{ \App\Models\section::where('id', $salary_report->employer_id)->value('section_name') }}</td> --}}
 
-                                                                <td> {{ $salary_report->section->section_name }}</td>
+                                                                {{-- <td> {{ $salary_report->section->section_name }}</td> --}}
                                                                 <td> {{ $salary_report->employer->phone }}</td>
 
                                                                 <td> {{ $salary_report->employer->salary }}</td>
-                                                                <td> {{ $salary_report->hour_price }}</td>
-                                                                <td> {{ $salary_report->discount }}</td>
-                                                                <td> {{ $salary_report->addition }}</td>
-                                                                <td> {{ $salary_report->week_holiday }}</td>
-                                                                <td> {{ $salary_report->total }}</td>
-                                                                <td> {{ $salary_report->attendance }}</td>
-                                                                <td> {{ $salary_report->upsent }}</td>
-                                                                <td> {{ $salary_report->all_total }}</td>
+                                                                <td> {{ $salary_report->employer->hour_price }}</td>
+                                                                <td> {{ $salary_report->total_attendace_days }}</td>
+                                                                <td> {{ $salary_report->total_absent_days }}</td>
+                                                                <td> {{ $salary_report->total_hours_discount }}</td>
 
-                                                     
+                                                                <td> {{ $salary_report->total_hours_overtime }}</td>
+                                                                <td> {{ $salary_report->total_hours_amount }}</td>
+
+                                                                <td> {{ $salary_report->total }}</td>
+
+
+
 
 
 
                                                                 <td>
-                                                                   
+
 
 
 

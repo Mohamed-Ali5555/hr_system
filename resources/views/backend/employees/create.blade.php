@@ -163,16 +163,16 @@
                                                         <div class=" row form-group">
                                                             <label class="col-md-3 label-control">Start time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
-                                                                <input type="time" id="timesheetinput5"
+                                                                <input type="time" id="start_time"
                                                                     class="form-control" name="start_time"
                                                                     value="{{ old('start_time') }}">
 
-                                                              
+
                                                                 <div class="form-control-position">
                                                                     <i class="ft-clock"></i>
                                                                 </div>
 
-																  @error('start_time')
+                                                                @error('start_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
@@ -182,18 +182,18 @@
                                                         <div class=" row form-group">
                                                             <label class="col-md-3 label-control">End time: </label>
                                                             <div class="position-relative has-icon-left col-lg-9">
-                                                                <input type="time" id="timesheetinput6"
+                                                                <input type="time" id="end_time"
                                                                     class="form-control" name="end_time"
                                                                     value="{{ old('end_time') }}">
 
 
-                                                               
+
 
                                                                 <div class="form-control-position">
                                                                     <i class="ft-clock"></i>
                                                                 </div>
 
-																 @error('end_time')
+                                                                @error('end_time')
                                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
@@ -227,13 +227,25 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control" for="projectinput7">Hour price:
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" id="hour_price" class="form-control"
+                                                            name="hour_price" value="{{ old('hour_price') }}"  onChange="javascript:myFunction()">
+
+                                                        @error('hour_price')
+                                                            <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
 
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control" for="projectinput7">Salary:
                                                     </label>
                                                     <div class="col-md-9">
-                                                        <input type="text" id="projectinput2" class="form-control"
-                                                            name="salary" value="{{ old('salary') }}">
+                                                        <input type="number" id="salary" class="form-control"
+                                                            name="salary" value="{{ old('salary') }}" readonly>
 
                                                         @error('salary')
                                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -284,16 +296,16 @@
                                                                 name="photo">
 
 
-                                                        
+
                                                         </div>
 
 
                                                         <div id="holder" style="margin-top:15px;max-height:100px;">
                                                         </div>
 
-                                                            @error('photo')
-                                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                            @enderror
+                                                        @error('photo')
+                                                            <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -345,4 +357,50 @@
     <script>
         $('#lfm').filemanager('image');
     </script>
+
+
+
+
+  
+
+
+    {{-- ///////////////////////////////////////////////////////// --}}
+    {{-- <script type="text/javascript">
+      $(document).ready(function(){
+        $('#hour_price').oninput(function(){
+            alert('yyyyyyyy');
+        })
+      })
+    </script> --}}
+
+    <script>
+        function myFunction() {
+
+
+            var start_time = parseFloat(document.getElementById('start_time').value); //نسبه الضريبه
+            var end_time = parseFloat(document.getElementById('end_time').value);
+            var hour_price = parseFloat(document.getElementById('hour_price').value); // ظقيمة ضريبة القيمة المض
+
+       
+            var full_time = end_time-start_time;  // 6 hours example
+
+                              
+                var salary = (full_time * hour_price * 22);
+
+                 // 6* 50 =300 *22 =6600
+
+
+            document.getElementById("salary").value = salary; //ارقام عشريه
+
+
+
+
+
+
+
+        }
+    </script>
+
+    {{-- ///////////////////////////////////////////////////////// --}}
 @endsection
+

@@ -13,20 +13,20 @@ class Salary_report extends Model
 
     protected $guarded =[]; 
 
-    public function section(){
-        return $this->belongsTo(section::Class,'section_id','id');
-    }
+    // public function section(){
+    //     return $this->belongsTo(section::Class,'section_id','id');
+    // }
 
     public function employer(){
         return $this->belongsTo(Employeer::Class);
     }
-    public function attendance(){
-        return $this->belongsTo(Attendance::Class);
-    }
+    // public function attendance(){
+    //     return $this->belongsTo(Attendance::Class);
+    // }
 
-    public function addition(){
-        return $this->hasMany('App\Models\AdditionAndDiscount')->where('addition_id','id');
-    }
+    // public function addition(){
+    //     return $this->hasMany('App\Models\AdditionAndDiscount')->where('addition_id','id');
+    // }
 
     // public function addition(){
     //     return $this->belongsTo(AdditionAndDiscount::Class);

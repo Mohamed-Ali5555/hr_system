@@ -56,9 +56,9 @@
                                                     <tr>
                                                         <th>Id</th>
 
-                                                        <th>Name</th>
-                                                        <th>Date </th>
-
+                                                        <th>Section Name</th>
+                                                        <th>employer name </th>
+                                                        <th>holidays name </th>
                                                         <th>controles</th>
 
                                                     </tr>
@@ -72,15 +72,16 @@
                                                             <tr>
                                                                 <td>{{ $i }}</td>
 
-                                                                <td>{{ $official_holiday->name }}</td>
-                                                                <td>{{ $official_holiday->date }}</td>
-
+                                                                <td>{{ $official_holiday->section->section_name }}</td>
+                                                                <td>{{ $official_holiday->employer_id }}</td>
+                                                                <td>{{ $official_holiday->week_holiday }}</td>
 
                                                                 <td>
-                                                                    <a type="button" class="btn btn-primary"
-                                                                        data-toggle="modal"
-                                                                        data-target="#staticBackdrop{{ $official_holiday->id }}"
-                                                                        data-backdrop="false"><i class="icon-edit"></i>edit</a>
+                                                                    <a href="{{ route('official_holidays.edit', $official_holiday->id) }}"
+                                                                        data-toggle="tooltip" title="edit"
+                                                                        class="float-left btn btn-sm btn-outline-warning"
+                                                                        data-placement="button"><i
+                                                                            class="icon-edit"></i></a>
 
                                                                     <form class="float-left ml-2"
                                                                         action="{{ route('official_holidays.destroy', $official_holiday->id) }}"
@@ -97,104 +98,6 @@
                                                                     </form>
 
                                                                 </td>
-
-
-                                                                <!-- Modal -->
-                                                                <div class="modal fade"
-                                                                    id="staticBackdrop{{ $official_holiday->id }}"
-                                                                    data-backdrop="static" data-keyboard="false"
-                                                                    tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                                    aria-hidden="true" style="background: rgba(0,0,0,0.5);">
-                                                          
-                                                                    <div class="modal-dialog">
-                                                                        <form
-                                                                            action="{{ route('official_holidays.update', $official_holiday->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('patch')
-
-                                                                            <div class="modal-content">
-
-                                                                                <div class="modal-header mt-4">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="staticBackdropLabel">
-                                                                                        edit official_holidays</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-
-
-                                                                                <div class="col-md-12">
-                                                                                    {{-- ################################# --}}
-                                                                                    @if ($errors->any())
-                                                                                        <div class="alert alert-danger">
-                                                                                            <ul>
-                                                                                                @foreach ($errors->all() as $error)
-                                                                                                    <li>{{ $error }}
-                                                                                                    </li>
-                                                                                                @endforeach
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    @endif
-                                                                                    {{-- ########################### --}}
-                                                                                </div>
-
-
-                                                                                <div class="modal-body">
-                                                                                    <label> name</label>
-                                                                                    <input class="form-control"
-                                                                                        name="name"
-                                                                                        placeholder="name of section"
-                                                                                        value="{{ $official_holiday->name }}">
-                                                                                </div>
-
-
-
-
-
-                                                                                <label class="col-md-3 label-control"
-                                                                                    for="projectinput9">Date:
-                                                                                </label>
-                                                                                <div class="col-md-12">
-                                                                                    <div
-                                                                                        class="position-relative has-icon-left">
-                                                                                        <input type="date"
-                                                                                            id="timesheetinput3"
-                                                                                            class="form-control"
-                                                                                            name="date"value="{{ $official_holiday->date }}">
-
-
-
-                                                                                        @error('date')
-                                                                                            <div class="alert alert-danger">
-                                                                                                {{ $message }}</div>
-                                                                                        @enderror
-
-
-                                                                                    </div>
-                                                                                </div>
-
-
-
-
-
-
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-secondary"
-                                                                                        data-dismiss="modal">Close</button>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary">save</button>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
 
 
 
@@ -228,13 +131,38 @@
 
 
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 label-control" for="">
+                                                        <label class="col-md-3 label-control" for="projectinput7">Employee
                                                             Name : </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" id="timesheetinput3"
-                                                                class="form-control" name="name">
+                                                            <select name="section_id" id="section_id"
+                                                                class="form-control SlectBox"
+                                                                onclick="console.log($(this).val())">
+                                                                <!--placeholder-->
+                                                                <option value="" selected disabled>حدد القسم</option>
+                                                                @foreach ($sections as $section)
+                                                                    <option value="{{ $section->id }}">
+                                                                        {{ $section->section_name }}</option>
+                                                                @endforeach
+                                                            </select>
 
-                                                            @error('name')
+
+                                                            @error('section_id')
+                                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control" for="">Employee
+                                                            Name : </label>
+                                                        <div class="col-md-9">
+                                                            <select id="employer" name="employer_id" class="form-control">
+
+                                                            </select>
+
+
+                                                            @error('employer_id')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                             @enderror
                                                         </div>
@@ -243,41 +171,52 @@
 
 
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 label-control" for="projectinput9">Date:
-                                                        </label>
+                                                        <label class="col-md-3 label-control" for="projectinput7">Weekly
+                                                            Holidays: </label>
                                                         <div class="col-md-9">
-                                                            <div class="position-relative has-icon-left">
-                                                                <input type="date" id="timesheetinput3"
-                                                                    class="form-control" name="date">
 
+                                                            <input type="checkbox" id="vehicle1" name="week_holiday[]"
+                                                                value="Satrday">
+                                                            <label for="sat"> Satrday</label><br>
+                                                            <input type="checkbox" id="vehicle2"
+                                                                name="week_holiday[]"value="Sunday">
+                                                            <label for="sun"> Sunday</label><br>
+                                                            <input type="checkbox" id="vehicle3" name="week_holiday[]"
+                                                                value="Monday">
+                                                            <label for="mon"> Monday</label><br>
+                                                            <input type="checkbox" id="vehicle3" name="week_holiday[]"
+                                                                value="thirthday">
+                                                            <label for="mon"> thirthday</label><br>
+                                                            <input type="checkbox" id="vehicle2" name="week_holiday[]"
+                                                                value="Tuesday">
+                                                            <label for="sun"> Tuesday</label><br>
+                                                            <input type="checkbox" id="Tue" name="week_holiday[]"
+                                                                value="Turthday">
+                                                            <label for="sun"> Turthday</label><br>
+                                                            <input type="checkbox" id="Tue" name="week_holiday[]"
+                                                                value="Friday">
+                                                            <label for="Fri">Friday</label><br>
 
+                                                            @error('week_holiday')
+                                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                            @enderror
 
-                                                                @error('date')
-                                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                                @enderror
-
-
-                                                                <div class="form-control-position">
-                                                                    <i class="ft-message-square"></i>
-                                                                </div>
-                                                            </div>
                                                         </div>
+
                                                     </div>
-                                                </div>
 
 
 
 
 
-
-                                                <div class="form-actions">
-                                                    <button type="button" class="btn btn-danger mr-1">
-                                                        <i class="icon-trash"></i> Cancel
-                                                    </button>
-                                                    <button type="submit" class="btn btn-success">
-                                                        <i class="icon-note"></i> Save
-                                                    </button>
-                                                </div>
+                                                    <div class="form-actions">
+                                                        <button type="button" class="btn btn-danger mr-1">
+                                                            <i class="icon-trash"></i> Cancel
+                                                        </button>
+                                                        <button type="submit" class="btn btn-success">
+                                                            <i class="icon-note"></i> Save
+                                                        </button>
+                                                    </div>
 
                                             </form>
                                         </div>
@@ -301,6 +240,9 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+
     <script>
         $(document).ready(function() {
             $('select[id="section_id"]').on('change', function() {
@@ -349,23 +291,41 @@
             var dataID = $(this).data('id');
             e.preventDefault();
 
-            swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    form.submit();
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Your imaginary file is safe!");
-                    }
-                });
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                form.submit();
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+
+
         })
     </script>
 @endsection
+
+
+{{-- <form class="float-left ml-2"
+                                                                        action="{{ route('official_holidays.destroy', $official_holiday->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <a href="#" data-toggle="tooltip"
+                                                                            title="delete" data-id="{{ $official_holiday->id }}"
+                                                                            class="dlBtn btn btn-sm btn-outline-danger"
+                                                                            data-placement="button"><i
+                                                                                class="icon-trash"></i></a>
+
+                                                                    </form> --}}

@@ -1,7 +1,9 @@
-@extends('backend.layouts.master')
-@section('content')
+{{-- @extends('backend.layouts.master') --}}
 
+    @include('backend.layouts.head')
+                @include('backend.layouts.sidebar')
 
+{{-- @section('content') --}}
      <div class="main-panel">
             <div class="main-content">
                <div class="content-wrapper">
@@ -27,13 +29,13 @@
                                              </ol>
                                              <div class="carousel-inner" role="listbox">
                                                 <div class="carousel-item active">
-                                                   <img src="../app-assets/img/slide.PNG" alt="First slide">
+                                                   <img src="{{asset('backend/assets/img/slide.PNG')}}" alt="First slide">
                                                 </div>
                                                 <div class="carousel-item">
-                                                   <img src="../app-assets/img/slide2.PNG" alt="Second slide">
+                                                   <img src="{{asset('backend/assets/img/slide2.PNG')}}" alt="Second slide">
                                                 </div>
                                                 <div class="carousel-item">
-                                                   <img src="../app-assets/img/slide3.PNG" alt="Third slide">
+                                                   <img src="{{asset('backend/assets/img/slide3.PNG')}}" alt="Third slide">
                                                 </div>
                                              </div>
                                              <a class="carousel-control-prev" href="#carousel-example-caption" role="button" data-slide="prev">
@@ -60,11 +62,11 @@
                                        <div class="row text-white">
                                           <div class="col-6">
                                              <h1><i class="fa fa-usd background-round text-white p-2 font-medium-3"></i></h1>
-                                             <h4 class="pt-1 m-0 text-white">123 <i class="fa fa-long-arrow-up"></i></h4>
+                                             <h4 class="pt-1 m-0 text-white">100 % <i class="fa fa-long-arrow-up"></i></h4>
                                           </div>
                                           <div class="col-6 text-right pl-0">
                                              <h4 class="text-white mb-2">Employees</h4>
-                                             <span>90%</span>
+                                             <span>  {{ \App\Models\Employeer::count() }}</span>
                                              <br>
                                              <span>Grate</span>
                                           </div>
@@ -80,11 +82,22 @@
                                        <div class="row text-white">
                                           <div class="col-6">
                                              <h1><i class="fa fa-star-o background-round text-white p-2 font-medium-3"></i></h1>
-                                             <h4 class="pt-1 m-0 text-white">10 <i class="fa fa-long-arrow-down"></i></h4>
+                                             <h4 class="pt-1 m-0 text-white">
+                                                                       @php
+                                    $count_all = \App\Models\User::count();
+                                    $count_user= \App\Models\User::where('roles_name','user')->count();
+                                    if($count_user==0){
+                                        echo $count_user= 0;
+                                    }else{
+                                        echo $count_user= $count_user/ $count_all *100;
+                                    }
+                                    @endphp
+                                    %
+                                     <i class="fa fa-long-arrow-down"></i></h4>
                                           </div>
                                           <div class="col-6 text-right pl-0">
-                                             <h4 class="text-white mb-2">trainees</h4>
-                                             <span>5%</span>
+                                             <h4 class="text-white mb-2">Users</h4>
+                                             <span>  {{ number_format(\App\Models\User::where('roles_name', 'user')->count()) }}</span>
                                              <br>
                                              <span>Average</span>
                                           </div>
@@ -100,11 +113,27 @@
                                        <div class="row text-white">
                                           <div class="col-6">
                                              <h1><i class="fa fa-line-chart background-round text-white p-2 font-medium-3"></i></h1>
-                                             <h4 class="pt-1 m-0 text-white">20% <i class="fa fa-long-arrow-up"></i></h4>
+                                             <h4 class="pt-1 m-0 text-white">
+
+
+                                                     @php
+                                    $count_all = \App\Models\Attendance::count();
+                                    $count_attendance = \App\Models\Attendance::where('status','attendance')->count();
+                                    if($count_attendance ==0){
+                                        echo $count_attendance = 0;
+                                    }else{
+                                        echo $count_attendance = number_format($count_attendance / $count_all *100);
+                                    }
+                                    @endphp
+
+                                           %
+                                             
+                                             
+                                             <i class="fa fa-long-arrow-up"></i></h4>
                                           </div>
                                           <div class="col-6 text-right pl-0">
                                              <h4 class="text-white mb-2">Attendance </h4>
-                                             <span>60%</span>
+                                             <span>  {{ number_format(\App\Models\Attendance::where('status', 'attendance')->count()) }}</span>
                                              <br>
                                              <span>Good</span>
                                           </div>
@@ -120,11 +149,22 @@
                                        <div class="row text-white">
                                           <div class="col-6">
                                              <h1><i class="fa fa-rocket background-round text-white p-2 font-medium-3"></i></h1>
-                                             <h4 class="pt-1 m-0 text-white">82% <i class="fa fa-long-arrow-up"></i></h4>
+                                             <h4 class="pt-1 m-0 text-white">
+                                                     @php
+                                    $count_all = \App\Models\Attendance::count();
+                                    $count_attendance = \App\Models\Attendance::where('status','upsent')->count();
+                                    if($count_attendance ==0){
+                                        echo $count_attendance = 0;
+                                    }else{
+                                        echo $count_attendance = number_format($count_attendance / $count_all *100);
+                                    }
+                                    @endphp
+
+                                           %<i class="fa fa-long-arrow-up"></i></h4>
                                           </div>
                                           <div class="col-6 text-right pl-0">
-                                             <h4 class="text-white">Referral</h4>
-                                             <span>980</span>
+                                             <h4 class="text-white">upsent</h4>
+                                             <span>  {{ number_format(\App\Models\Attendance::where('status', 'upsent')->count()) }}</span>
                                              <br>
                                              <span>Grate</span>
                                           </div>
@@ -149,6 +189,9 @@
                               </div>
                               <div class="card-content mt-1">
                                  <div class="table-responsive">
+                                 <?php $employers = \App\Models\Employeer::orderBy('id','DESC')->get(); ?>
+
+                              
                                     <table class="table table-hover table-xl mb-0" id="recent-orders">
                                        <thead>
                                           <tr>
@@ -160,51 +203,35 @@
                                           </tr>
                                        </thead>
                                        <tbody>
+                                           @if ($employers->count() > 0)
+                                                        <?php $i = 0; ?>
+                                                        @foreach ($employers as $employer)
+                                                            <?php $i++; ?>
+                                        
                                           <tr>
                                              <td>
-                                                <button class="btn btn-sm btn-outline-danger round mb-0" type="button">#695</button>
+                                                <button class="btn btn-sm btn-outline-success round mb-0" type="button">#{{ $i }}</button>
                                              </td>
-                                             <td class="text-truncate">Tasneem saleh </td>
-                                             <td class="text-truncate">1-11-2021</td>
-                                             <td class="text-truncate">9 am </td>
-                                             <td class="text-truncate">5 pm </td>
-                                          </tr>
-                                          <tr>
-                                             <td>
-                                                <button class="btn btn-sm btn-outline-success round mb-0" type="button">#9985</button>
-                                             </td>
-                                             <td class="text-truncate">Mohamed ali</td>
-                                             <td class="text-truncate">1-11-2021</td>
-                                             <td class="text-truncate">10 am </td>
-                                             <td class="text-truncate">5 pm</td>
-                                          </tr>
-                                          <tr>
-                                             <td>
-                                                <button class="btn btn-sm btn-outline-danger round mb-0" type="button">#1111</button>
-                                             </td>
-                                             <td class="text-truncate">Eman ahmed</td>
-                                             <td class="text-truncate">1-11-2021</td>
-                                             <td class="text-truncate">9 am </td>
-                                             <td class="text-truncate">5 pm </td>
-                                          </tr>
-                                          <tr>
-                                             <td>
-                                                <button class="btn btn-sm btn-outline-success round mb-0" type="button">#050</button>
-                                             </td>
-                                             <td class="text-truncate">ahmed mohamed</td>
-                                             <td class="text-truncate">1-11-2021</td>
-                                             <td class="text-truncate">9 am </td>
-                                             <td class="text-truncate">5 pm </td>
-                                          </tr>
-                                          <tr>
-                                             <td>
-                                                <button class="btn btn-sm btn-outline-danger round mb-0" type="button">#9333</button>
-                                             </td>
-                                             <td class="text-truncate">Reem Mohamed</td>
-                                             <td class="text-truncate">1-11-2021</td>
-                                             <td class="text-truncate">9 am </td>
-                                             <td class="text-truncate">5 pm </td>
-                                          </tr>
+                                      
+                                      
+                                                       
+                                                            
+
+                                                                <td>{{ $employer->first_name }}</td>
+                                                              
+                                                              
+                                                                <td>{{ $employer->date }}</td>
+                                                        
+                                                               
+                                                                <td>{{ $employer->start_time }}</td>
+                                                                <td>{{ $employer->end_time }}</td>
+                                                    
+
+                                                        
+
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                        </tbody>
                                     </table>
                                  </div>
@@ -404,15 +431,4 @@
       </aside>
 
 
-@endsection
-
-
-
-
-
-
-
-
-
-
-
+{{-- @endsection --}}

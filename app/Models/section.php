@@ -17,8 +17,6 @@ class section extends Model
 
     }
 
-    public function attendance(){
-        return $this->hasMany('App\Models\Attendance')->where('status','attendance');
-    }
+    
 
 }

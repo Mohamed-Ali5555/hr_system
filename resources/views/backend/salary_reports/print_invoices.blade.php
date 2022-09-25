@@ -64,7 +64,7 @@
                                                             <tr>
                                                                 <td>{{ $salary_reports->id }}</td>
                                                                  <td> {{ $salary_reports->employer->first_name }}</td>
-                                                                <td> {{ $salary_reports->section->section_name }}</td>
+                                                                {{-- <td> {{ $salary_reports->section->section_name }}</td> --}}
                                                                 {{-- <td> {{ $salary_reports->employer->phone }}</td> --}}
 
                                                                 <td> {{ $salary_reports->employer->salary }}</td>

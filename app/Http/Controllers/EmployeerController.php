@@ -77,7 +77,7 @@ class EmployeerController extends Controller
             'national_id'=>'required|max:14|min:14',
             'nationality'=>'string|required',
             'photo'=>'required',
-            'salary'=>'required|numeric',
+            'salary'=>'nullable|numeric',
             'note'=>'string|nullable',
             'section_id'=>'required|exists:sections,id',
             'status' => 'nullable|in:pending,accept',
@@ -91,28 +91,22 @@ class EmployeerController extends Controller
          ]);
         $data=$request->all();
         
-        $slug = Str::slug($request->input('first_name'));
-        $slug_count = Employeer::where('slug',$slug)->count();
-        if($slug_count>0){
-            $slug = time(). '-' .$slug;
-        }
-        $data['slug']=$slug;
+       
 
 
-        // $new = Employeer::create();
 
        $new= Employeer::create($data);
 
 
 //جرب كده نشوف ايه بيحصل
         // $employer_id = Employeer::latest()->first()->id;  // this code give invoices id to invoices details
-         $salary=  Salary_report::create([
+        //  $salary=  Salary_report::create([
             
-             'section_id'=>$request->section_id,
-             'employer_id'=>$new->id,
-          //   'first_name' => $request->first_name,
-             'salary' => $request->salary,
-         ]);
+        //      'section_id'=>$request->section_id,
+        //      'employer_id'=>$new->id,
+        //   //   'first_name' => $request->first_name,
+        //      'salary' => $request->salary,
+        //  ]);
 
 
 
@@ -189,6 +183,8 @@ class EmployeerController extends Controller
                 'national_id'=>'required|numeric',
                 'nationality'=>'string|required',
                 'photo'=>'required',
+                'hour_price'=>'required|numeric',
+
                 'salary'=>'required|numeric',
                 'note'=>'string|nullable',
                 'section_id'=>'required|exists:sections,id',
@@ -199,20 +195,20 @@ class EmployeerController extends Controller
                 'phone.required'    => 'من فضلك ادخل رقم تليفون صحيح ',
      
              ]);
-     $data = $request->all();
-     $new = $employer->fill($data)->save();
-     if($new){
-         return redirect()->route('employees.index')->with('success','successfully updated employer');
+            $data = $request->all();
+            $new = $employer->fill($data)->save();
+            if($new){
+                return redirect()->route('employees.index')->with('success','successfully updated employer');
+        
+            }else{
+                return back()->with('error','something went wrong!');
+            }
  
-     }else{
-          return back()->with('error','something went wrong!');
-     }
  
  
- 
-         }else{
-             return back()->with('error','Data not found !');
-         }
+            }else{
+                return back()->with('error','Data not found !');
+            }
     }
 
     /**

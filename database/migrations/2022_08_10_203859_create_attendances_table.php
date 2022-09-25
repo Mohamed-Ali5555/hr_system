@@ -16,17 +16,23 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             
-            // $table->string('employer');
-            $table->string('slug')->unique();
 
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->date('today')->nullable();
+            $table->time('attendance_time')->nullable();
+            $table->time('depature_time')->nullable();
             $table->date('date')->nullable();
+            $table->date('absent_date')->nullable();
+            $table->integer('total_hours_amount')->default(0);  //that he stay
+            $table->integer('total_hours_price')->default(0);  //that he stay and there price
+            $table->integer('diff_hours_over')->default(0);  //that he get over 
+            $table->integer('diff_hours_discount')->default(0);  //that he late
+
+            $table->integer('discount_total')->default(0);  //that he absent
+            $table->string('status');  //that he stay
+            $table->integer('value_status')->default(1);  //that he stay
 
             $table->unsignedBigInteger('employer_id');
             $table->foreign('employer_id')->references('id')->on('employeers')->onDelete('cascade');
-            $table->enum('status',['attendance ','upsent']);
+            
 
 
 

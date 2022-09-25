@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('home');
 });
 // Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
-Route::get('section/{id}',[\App\Http\Controllers\AttendanceController::class,'getproducts']);  //the error in route this dont put it in middleware
+Route::get('section/{id}',[\App\Http\Controllers\official_holidaysController::class,'getproducts']);  //the error in route this dont put it in middleware
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('users', \App\Http\Controllers\UserController::class);

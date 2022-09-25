@@ -16,35 +16,36 @@ class CreateSalaryReportsTable extends Migration
         Schema::create('salary_reports', function (Blueprint $table) {
             $table->id();
 
-            // $table->string('first_name')->nullable();
-            $table->float('salary')->default(0)->nullable();
-            // $table->enum('status',['attendance ','upsent'])->default('attendance')->nullable();
-            $table->string('attendance')->nullable();
-            $table->string('upsent')->nullable();
+       
+            $table->date('report_date')->nullable();
 
-            $table->decimal('discount')->nullable();
-            $table->decimal('addition')->nullable();
+            
+            $table->integer('total_attendace_days')->default(0); // that he staty 
+            $table->integer('total_absent_days')->default(0);
 
-            $table->string('week_holiday')->nullable();
-            $table->decimal('hour_price')->nullable();
-            $table->decimal('total')->nullable();
-            $table->date('date')->nullable();
+            $table->integer('total_hours_amount')->default(0); // that he staty 
+            // $table->integer('total_price_amount')->default(0);
+            $table->decimal('hour_price')->default(0);
+
+      
+            $table->integer('total_hours_overtime')->default(0);  //that he over stay or depature
+            $table->integer('total_hours_discount')->default(0);
+
+            $table->integer('discount_total')->default(0);  // that not get
+
+            $table->decimal('total')->default(0); //all total
+           
 
             $table->unsignedBigInteger('section_id')->nullable();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
           
           
-            $table->unsignedBigInteger('addition_id')->nullable();
-            $table->foreign('addition_id')->references('id')->on('addition_and_discounts')->onDelete('cascade');
+            
 
             $table->unsignedBigInteger('employer_id')->nullable();
             $table->foreign('employer_id')->references('id')->on('employeers')->onDelete('cascade');
-
-            $table->unsignedBigInteger('attendance_id')->nullable();
-            $table->foreign('attendance_id')->references('id')->on('attendances')->onDelete('cascade');
-            $table->decimal('all_total')->nullable();
+         
             $table->softDeletes();
-
             $table->timestamps();
         });
     }

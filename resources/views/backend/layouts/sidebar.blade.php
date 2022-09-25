@@ -58,17 +58,10 @@
                           <a href="#"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title"> General
                                   Settings</span></a>
                           <ul class="menu-content">
-                              @can('addition_and_discount')
-                                  <li><a href="{{ route('addition_and_discount.index') }}" class="menu-item"> <i
-                                              class="icon-bar"></i> addition_and_discount</a>
-                                  </li>
-                              @endcan
-                              <li class=" nav-item"><a href="{{ route('addition_and_discount.create') }}"><i
-                                          class="icon-note"></i><span data-i18n="" class="menu-title">Add addion or
-                                          dicount</span></a>
-                              </li>
+                            
                               @can('official_holidays')
-                                  <li><a href="{{ route('official_holidays.index') }}" class="menu-item">official_holidays</a>
+                                  <li><a href="{{ route('official_holidays.index') }}" class="menu-item"><i
+                                          class="icon-note"></i>official_holidays</a>
                                   </li>
                               @endcan
                           </ul>

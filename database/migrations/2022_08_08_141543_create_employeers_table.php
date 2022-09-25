@@ -16,7 +16,6 @@ class CreateEmployeersTable extends Migration
         Schema::create('employeers', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            $table->string('slug')->unique();
 
             $table->string('address');
             $table->string('email')->unique();
@@ -30,6 +29,8 @@ class CreateEmployeersTable extends Migration
             $table->float('salary')->default(0);
             $table->string('national_id');
             $table->string('nationality');
+            $table->decimal('hour_price')->default(0);
+
 
             $table->string('photo')->nullable();
             $table->mediumText('note')->nullable();
