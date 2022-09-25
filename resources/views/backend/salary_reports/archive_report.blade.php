@@ -25,37 +25,9 @@
                                                 so all you need to do to use it with your own ables is to call the
                                                 construction</p>
 
-                                            <div class="row">
-                                                <form action="{{ route('Search_salary') }}" method="POST" role="search"
-                                                    autocomplete="off">
-                                                    {{ csrf_field() }}
-                                                    <div class="search-form">
-                                                        <label>Employee Name :
-                                                            <div class="col-lg-4" id="start_at">
-                                                                {{-- <label for="exampleFormControlSelect1">من
-                                                                            تاريخ</label> --}}
-                                                                <input class=" fc-datepicker" value="{{ $start_at ?? '' }}"
-                                                                    name="start_at" placeholder="YYYY-MM-DD" type="date">
-                                                            </div>
-
-                                                            <div class="col-lg-4" id="end_at">
-                                                                {{-- <label for="exampleFormControlSelect1">الي
-                                                                            تاريخ</label> --}}
-
-                                                                <input class=" fc-datepicker" name="end_at"
-                                                                    value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD"
-                                                                    type="date">
-
-
-                                                            </div>
-                                                            <button type="submit" class="btn btn-sm btn-primary"
-                                                                style="float: right;">Search</button>
-                                                        </label>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                            <table class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
+                                          
+                                            <table
+                                                class="table table-striped table-bordered zero-configuration mt-40 table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th>Id</th>
@@ -64,13 +36,15 @@
                                                         <th>Phone</th>
                                                         <th>Salary</th>
                                                         <th>hour price</th>
-                                                        <th> total_absent_days</th>
+
+
                                                         <th> total_attendace_days</th>
-                                                        <th> total_hours_amount</th>
-                                                        <th> total_price_amount</th>
+                                                        <th> total_absent_days</th>
+
+                                                        <th> total hours discount</th>
 
                                                         <th> total_hours_overtime</th>
-
+                                                        <th> total_hours_amount</th>
                                                         <th> Total</th>
 
                                                     </tr>
@@ -95,12 +69,12 @@
 
                                                                 <td> {{ $salary_report->employer->salary }}</td>
                                                                 <td> {{ $salary_report->employer->hour_price }}</td>
-                                                                <td> {{ $salary_report->total_absent_days }}</td>
                                                                 <td> {{ $salary_report->total_attendace_days }}</td>
-                                                                <td> {{ $salary_report->total_hours_amount }}</td>
-                                                                <td> {{ $salary_report->total_price_amount }}</td>
-                                                                <td> {{ $salary_report->total_hours_overtime }}</td>
+                                                                <td> {{ $salary_report->total_absent_days }}</td>
+                                                                <td> {{ $salary_report->total_hours_discount }}</td>
 
+                                                                <td> {{ $salary_report->total_hours_overtime }}</td>
+                                                                <td> {{ $salary_report->total_hours_amount }}</td>
 
                                                                 <td> {{ $salary_report->total }}</td>
 

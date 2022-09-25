@@ -26,32 +26,36 @@
                                                 construction</p>
 
                                             <div class="row">
-                                                <form action="{{ route('Search_salary') }}" method="POST" role="search"
-                                                    autocomplete="off">
-                                                    {{ csrf_field() }}
-                                                    <div class="search-form">
-                                                        <label>Employee Name :
-                                                            <div class="col-lg-4" id="start_at">
+                                                <div class=" col-md-6">
+                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                        <form action="{{ route('Search_salary') }}" method="POST"
+                                                            role="search" autocomplete="off">
+                                                            {{ csrf_field() }}
+                                                            <div class="search-form">
+                                                                <label>Employee Name :
+                                                                    <div class="col-lg-4" id="start_at">
 
-                                                                <input class=" fc-datepicker" value="{{ $start_at ?? '' }}"
-                                                                    name="start_at" placeholder="YYYY-MM-DD" type="date">
+                                                                        <input class="orm-control fc-datepicker"
+                                                                            value="{{ $start_at ?? '' }}" name="start_at"
+                                                                            placeholder="YYYY-MM-DD" type="date">
+                                                                    </div>
+
+                                                                    <div class="col-lg-4" id="end_at">
+
+
+                                                                        <input class="orm-control fc-datepicker"
+                                                                            name="end_at" value="{{ $end_at ?? '' }}"
+                                                                            placeholder="YYYY-MM-DD" type="date">
+
+
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-sm btn-primary"
+                                                                        style="float: right;">Search</button>
+                                                                </label>
                                                             </div>
-
-                                                            <div class="col-lg-4" id="end_at">
-
-
-                                                                <input class=" fc-datepicker" name="end_at"
-                                                                    value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD"
-                                                                    type="date">
-
-
-                                                            </div>
-                                                            <button type="submit" class="btn btn-sm btn-primary"
-                                                                style="float: right;">Search</button>
-                                                        </label>
+                                                        </form>
                                                     </div>
-                                                </form>
-
+                                                </div>
                                             </div>
                                             <table
                                                 class="table table-striped table-bordered zero-configuration mt-40 table-responsive">

@@ -68,8 +68,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('backend.users.show',compact('user'));
+        // $user = User::find($id);
+        // return view('backend.users.show',compact('user'));
     }
     
     /**
@@ -128,8 +128,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        return  $id;
         User::find($id)->delete();
-        return redirect()->route('backend.users.index')
+
+        return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
 }
